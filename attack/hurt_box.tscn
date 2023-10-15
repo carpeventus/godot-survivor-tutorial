@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://t0afa6wm0tlm"]
+
+[ext_resource type="Script" path="res://attack/HurtBox.cs" id="1_mr284"]
+
+[node name="HurtBox" type="Area2D"]
+position = Vector2(0, -5)
+collision_layer = 0
+collision_mask = 8
+script = ExtResource("1_mr284")

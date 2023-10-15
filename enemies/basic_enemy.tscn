@@ -1,0 +1,31 @@
+[gd_scene load_steps=6 format=3 uid="uid://wx52d1nhvecm"]
+
+[ext_resource type="Script" path="res://enemies/BasicEnemy.cs" id="1_bw4cv"]
+[ext_resource type="Texture2D" uid="uid://drqhs5fs13csm" path="res://sprites/Tiles/tile_0124.png" id="1_t7m5k"]
+[ext_resource type="PackedScene" uid="uid://t0afa6wm0tlm" path="res://attack/hurt_box.tscn" id="2_n87lf"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_7rtjs"]
+radius = 9.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_5d4j2"]
+radius = 6.0
+
+[node name="BasicEnemy" type="CharacterBody2D" groups=["basic_enemy"]]
+collision_layer = 4
+collision_mask = 5
+script = ExtResource("1_bw4cv")
+
+[node name="HurtBox" parent="." instance=ExtResource("2_n87lf")]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox"]
+shape = SubResource("CircleShape2D_7rtjs")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_t7m5k")
+offset = Vector2(2.08165e-12, -4)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -5)
+shape = SubResource("CircleShape2D_5d4j2")
+
+[editable path="HurtBox"]
