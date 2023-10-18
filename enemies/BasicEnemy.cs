@@ -3,13 +3,16 @@ using System;
 
 public partial class BasicEnemy : CharacterBody2D {
 	[Export] public float Speed = 40f;
+	
+	public HealthComponent HealthComponent { get; private set; }
 
 	public override void _Ready() {
 		GetNode<HurtBox>("HurtBox").Hurt += OnHurt;
+		HealthComponent = GetNode<HealthComponent>("HealthComponent");
 	}
 
 	private void OnHurt(HitBox hitBox) {
-		QueueFree();
+		HealthComponent.TakeDamage(hitBox.Damage);
 	}
 	
 	public override void _Process(double delta) {

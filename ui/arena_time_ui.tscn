@@ -18,4 +18,4 @@ theme_override_constants/margin_top = 16
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 0
-text = "Test"
+text = "00:00"
