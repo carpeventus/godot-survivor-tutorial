@@ -17,7 +17,7 @@ config/icon="res://icon.svg"
 
 [autoload]
 
-GameEvents="*res://autoload/GameEvents.cs"
+GameEvents="*res://autoload/game_events.tscn"
 
 [display]
 
