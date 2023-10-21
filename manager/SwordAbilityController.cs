@@ -23,7 +23,8 @@ public partial class SwordAbilityController : Node {
 			if (nearEnemy.Count == 0) {
 				return;
 			}
-			Node2D sword = SwordScene.Instantiate<Node2D>();
+			SwordAbility sword = SwordScene.Instantiate<SwordAbility>();
+			
 			// sword的位置为距离player最近的敌人的位置 + 一点点随机位置
 			sword.GlobalPosition = nearEnemy[0].GlobalPosition + Vector2.Right.Rotated((float)GD.RandRange(0, Mathf.Tau));
 			// 将剑旋转为指向敌人的方向     

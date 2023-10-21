@@ -1,6 +1,7 @@
-[gd_scene load_steps=7 format=3 uid="uid://dgfywusyd54w2"]
+[gd_scene load_steps=8 format=3 uid="uid://dgfywusyd54w2"]
 
-[ext_resource type="PackedScene" uid="uid://bigs6miv7667l" path="res://common/hit_box.tscn" id="1_tfpk6"]
+[ext_resource type="Script" path="res://abilities/SwordAbility.cs" id="1_rf7hv"]
+[ext_resource type="PackedScene" uid="uid://bigs6miv7667l" path="res://component/hit_box.tscn" id="1_vyksi"]
 [ext_resource type="Texture2D" uid="uid://cw8gvbsepb7i3" path="res://sprites/Tiles/tile_0104.png" id="1_y3occ"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_mjvci"]
@@ -107,8 +108,9 @@ _data = {
 }
 
 [node name="SwordAbility" type="Node2D"]
+script = ExtResource("1_rf7hv")
 
-[node name="HitBox" parent="." instance=ExtResource("1_tfpk6")]
+[node name="HitBox" parent="." instance=ExtResource("1_vyksi")]
 Damage = 10
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox"]
