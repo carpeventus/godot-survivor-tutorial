@@ -4,10 +4,10 @@ using System;
 public partial class ExperienceVial : Area2D
 {
 	public override void _Ready() {
-		BodyEntered += OnBodyEntered;
+		AreaEntered += OnPickupAreaEntered;
 	}
 
-	private void OnBodyEntered(Node2D body) {
+	private void OnPickupAreaEntered(Node2D body) {
 		// GD 可以像静态方法一样调用 GameEvents.EmitExperienceVialCollected(1f);
 		// C# 只能👇这样...
 		GetNode<GameEvents>("/root/GameEvents").EmitExperienceVialCollected(1f);

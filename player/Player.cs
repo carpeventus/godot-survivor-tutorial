@@ -7,8 +7,65 @@ public partial class Player : CharacterBody2D
 	
 	public Vector2 InputMovement { get; private set; }
 	public Vector2 Direction { get; private set; }
+
+	public Area2D PlayerHurtArea { get; private set; }
+
+	public int CollisionCount { get; private set; }
+	public Timer DamageIntervalTimer { get; private set; }
+	public HealthComponent Health { get; private set; }
+	public ProgressBar HealthBar { get; private set; }
 	
+	public override void _Ready()
+	{
+		PlayerHurtArea = GetNode<Area2D>("PlayerHurtArea");
+		DamageIntervalTimer = GetNode<Timer>("DamageIntervalTimer");
+		Health = GetNode<HealthComponent>("HealthComponent");
+		HealthBar = GetNode<ProgressBar>("HealthBar");
+		// 敌人是Body
+		PlayerHurtArea.BodyEntered += OnEnemyBodyEntered;
+		PlayerHurtArea.BodyExited += OnEnemyBodyExited;
+		DamageIntervalTimer.Timeout += OnDamageIntervalTimerTimeout;
+		Health.HealthChange += OnHealthChanged;
+		UpdateHealthBarDisplay();
+	}
+
+	private void OnHealthChanged()
+	{
+		UpdateHealthBarDisplay();
+	}
+
+	private void UpdateHealthBarDisplay()
+	{
+		HealthBar.Value = Health.GetPercent();
+	}
+
+	private void OnDamageIntervalTimerTimeout()
+	{
+		CheckDamage();
+	}
+
+	private void OnEnemyBodyEntered(Node2D enemy)
+	{
+		CollisionCount += 1;
+		CheckDamage();
+	}
 	
+	private void OnEnemyBodyExited(Node2D enemy)
+	{
+		CollisionCount -= 1;
+	}
+
+	private void CheckDamage()
+	{
+		if (!DamageIntervalTimer.IsStopped() || CollisionCount == 0)
+		{
+			return;	
+		}
+		// TODO damage
+		Health.TakeDamage(1);
+		DamageIntervalTimer.Start();
+	}
+
 	public override void _PhysicsProcess(double delta) {
 		var targetVelocity = Direction * MoveSpeed;
 		Velocity = Velocity.Lerp(targetVelocity, (float)(1 - Mathf.Exp(-delta * 20)));

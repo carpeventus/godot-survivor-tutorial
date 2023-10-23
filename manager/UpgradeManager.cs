@@ -8,8 +8,9 @@ public partial class UpgradeManager : Node {
     [Export] public PackedScene UpgradeScreenScene;
 
     public Dictionary<string, UpgradeDictValue> Upgrades { get; private set; } = new();
-    
-    public override void _Ready() {
+
+    public override void _Ready()
+    {
         ExperienceManager.LevelUp += OnLevelUp;
     }
 
@@ -38,18 +39,19 @@ public partial class UpgradeManager : Node {
         else {
             Upgrades[abilityUpgrade.Id] = new UpgradeDictValue(abilityUpgrade.Id, 1, abilityUpgrade);
         }
+        GetNode<GameEvents>("/root/GameEvents").EmitAbilityUpgradeAdded(abilityUpgrade, Upgrades);
     }
     
-    public partial class UpgradeDictValue: GodotObject {
-        public string Id { get; set; }
-        public int Quantity { get; set; }
-        public AbilityUpgrade Resource { get; set; }
-
-        public UpgradeDictValue(string id, int quantity, AbilityUpgrade resource) {
-            Id = id;
-            Quantity = quantity;
-            Resource = resource;
-        }
-    }
 }
 
+public partial class UpgradeDictValue: GodotObject {
+    public string Id { get; set; }
+    public int Quantity { get; set; }
+    public AbilityUpgrade Resource { get; set; }
+
+    public UpgradeDictValue(string id, int quantity, AbilityUpgrade resource) {
+        Id = id;
+        Quantity = quantity;
+        Resource = resource;
+    }
+}

@@ -1,4 +1,4 @@
-[gd_scene load_steps=2 format=3 uid="uid://cbbavog7rwsav"]
+[gd_scene load_steps=2 format=3 uid="uid://bpxiyhe7bh1gq"]
 
 [ext_resource type="Script" path="res://ui/ExperienceBar.cs" id="1_c43ai"]
 
@@ -16,7 +16,6 @@ mouse_filter = 2
 [node name="ProgressBar" type="ProgressBar" parent="MarginContainer"]
 custom_minimum_size = Vector2(8, 8)
 layout_mode = 2
-size_flags_vertical = 8
 mouse_filter = 2
 max_value = 1.0
 show_percentage = false

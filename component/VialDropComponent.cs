@@ -27,6 +27,7 @@ public partial class VialDropComponent : Node
 		var spawnPosition = owner.GlobalPosition;
 		ExperienceVial experienceVial = ExperienceVialScene.Instantiate<ExperienceVial>();
 		experienceVial.GlobalPosition = spawnPosition;
-		Owner.GetParent().AddChild(experienceVial);
+		var entities = GetTree().GetFirstNodeInGroup("EntitiesLayer");
+		entities.AddChild(experienceVial);
 	}
 }

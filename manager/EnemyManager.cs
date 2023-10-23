@@ -20,7 +20,7 @@ public partial class EnemyManager : Node {
 		Vector2 spawnPosition = player.GlobalPosition + (2f / 3f) * viewportSize  * randomDirection;
 		Node2D enemy = BasicEnemyScene.Instantiate<Node2D>();
 		enemy.Position = spawnPosition;
-		Owner.AddChild(enemy);
-
+		var entities = GetTree().GetFirstNodeInGroup("EntitiesLayer");
+		entities.AddChild(enemy);
 	}
 }
