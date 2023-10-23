@@ -10,10 +10,7 @@ public partial class HurtBox : Area2D {
 		if (area is not HitBox hitBox) {
 			return;
 		}
-		if (HealthComponent is null)
-		{
-			return;	
-		}
-		HealthComponent.TakeDamage(hitBox.Damage);
+
+        HealthComponent?.TakeDamage(hitBox.Damage);
 	}
 }
