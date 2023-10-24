@@ -1,5 +1,6 @@
-[gd_scene load_steps=11 format=3 uid="uid://uj516r67cetj"]
+[gd_scene load_steps=13 format=3 uid="uid://uj516r67cetj"]
 
+[ext_resource type="Script" path="res://scenes/MainScene.cs" id="1_84enw"]
 [ext_resource type="PackedScene" uid="uid://canfw7tyhuqp1" path="res://ui/arena_time_ui.tscn" id="1_dyif1"]
 [ext_resource type="PackedScene" uid="uid://ik482kmrc674" path="res://player/player.tscn" id="1_wohsp"]
 [ext_resource type="PackedScene" uid="uid://d23klhtulnj4t" path="res://manager/experience_manager.tscn" id="2_hvtus"]
@@ -10,8 +11,11 @@
 [ext_resource type="PackedScene" uid="uid://5cl5xfv8csl8" path="res://manager/upgrade_manager.tscn" id="6_pgs6h"]
 [ext_resource type="Resource" uid="uid://c6od8gkd4y1c6" path="res://resources/upgrade/sword_rate.tres" id="7_vxtkr"]
 [ext_resource type="PackedScene" uid="uid://c5tht4ymiir7p" path="res://ui/upgrade_screen.tscn" id="8_vabwa"]
+[ext_resource type="PackedScene" uid="uid://dg6ckmuu7u4ck" path="res://ui/end_screen.tscn" id="8_xdfc3"]
 
 [node name="MainScene" type="Node2D"]
+script = ExtResource("1_84enw")
+EndScreenScene = ExtResource("8_xdfc3")
 
 [node name="ArenaTimeUI" parent="." node_paths=PackedStringArray("ArenaTimeManager") instance=ExtResource("1_dyif1")]
 ArenaTimeManager = NodePath("../Managers/ArenaTimeManager")
@@ -29,6 +33,7 @@ UpgradeScreenScene = ExtResource("8_vabwa")
 [node name="ExperienceManager" parent="Managers" instance=ExtResource("2_hvtus")]
 
 [node name="ArenaTimeManager" parent="Managers" instance=ExtResource("2_ra65g")]
+EndScreenScene = ExtResource("8_xdfc3")
 
 [node name="EnemyManager" parent="Managers" instance=ExtResource("3_k2k6a")]
 

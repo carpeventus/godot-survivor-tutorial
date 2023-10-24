@@ -29,6 +29,10 @@ public partial class Player : CharacterBody2D
 		UpdateHealthBarDisplay();
 	}
 
+	private void OnPlayerDied() {
+		
+	}
+
 	private void OnHealthChanged()
 	{
 		UpdateHealthBarDisplay();
