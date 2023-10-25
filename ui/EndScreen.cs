@@ -8,13 +8,10 @@ public partial class EndScreen : CanvasLayer {
 	private Label _endText;
 	private Label _endDesc;
 	public override void _Ready() {
-        GD.Print("End Screen Ready");
 		_restartButton = GetNode<Button>("%RestartButton");
 		_quitButton = GetNode<Button>("%QuitButton");
 		_endText = GetNode<Label>("%EndText");
 		_endDesc = GetNode<Label>("%EndDesc");
-		GD.Print(_endText);
-		GD.Print(_endDesc);
 		
 		_restartButton.Pressed += OnRestartButtonPressed;
 		_quitButton.Pressed += OnQuitButtonPressed;
