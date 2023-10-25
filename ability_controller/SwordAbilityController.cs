@@ -59,8 +59,8 @@ public partial class SwordAbilityController : Node
 			// 将剑旋转为指向敌人的方向     
 			sword.Rotation = (nearEnemy[0].GlobalPosition - sword.GlobalPosition).Angle();
 			
-			var entities = GetTree().GetFirstNodeInGroup("ForegroundLayer");
-			entities.AddChild(sword);
+			var foreGround = GetTree().GetFirstNodeInGroup("ForegroundLayer");
+			foreGround.AddChild(sword);
 		}
 	}
 
