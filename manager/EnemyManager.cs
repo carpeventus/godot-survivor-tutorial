@@ -37,7 +37,7 @@ public partial class EnemyManager : Node {
 
 	private Vector2 GetSpawnPosition()
 	{
-		if (GetTree().GetFirstNodeInGroup("player") is not Player player)
+		if (GetTree().GetFirstNodeInGroup("Player") is not Player player)
 		{
 			return Vector2.Zero;
 		}
@@ -56,7 +56,6 @@ public partial class EnemyManager : Node {
 			{
 				break;
 			}
-			GD.Print("Rotate to find next");
 			randomDirection = randomDirection.Rotated(Mathf.DegToRad(90));
 		}
 		return spawnPosition;

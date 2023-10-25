@@ -3,7 +3,9 @@
 [ext_resource type="Script" path="res://ui/AbilityUpgradeCard.cs" id="1_mqer6"]
 
 [node name="AbilityUpgradeCard" type="PanelContainer"]
-custom_minimum_size = Vector2(60, 100)
+custom_minimum_size = Vector2(60, 80)
+offset_right = 100.0
+offset_bottom = 120.0
 script = ExtResource("1_mqer6")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]

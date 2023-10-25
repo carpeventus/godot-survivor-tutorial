@@ -1,10 +1,9 @@
-[gd_scene load_steps=11 format=3 uid="uid://ik482kmrc674"]
+[gd_scene load_steps=10 format=3 uid="uid://ik482kmrc674"]
 
 [ext_resource type="Script" path="res://player/Player.cs" id="1_4ws04"]
 [ext_resource type="Texture2D" uid="uid://bsj716rw03ex7" path="res://sprites/Tiles/tile_0097.png" id="1_v4i0h"]
 [ext_resource type="PackedScene" uid="uid://8f364lj07xs0" path="res://component/health_component.tscn" id="2_che35"]
 [ext_resource type="PackedScene" uid="uid://bqtonxc2xowav" path="res://ability_controller/sword_ability_controller.tscn" id="2_yco4e"]
-[ext_resource type="PackedScene" uid="uid://b7rax4ib53ebm" path="res://ability_controller/axe_ability_controller.tscn" id="4_bwu6f"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_65wv3"]
 bg_color = Color(0.247059, 0.14902, 0.192157, 1)
@@ -26,7 +25,7 @@ radius = 12.0
 [sub_resource type="CircleShape2D" id="CircleShape2D_a1tqw"]
 radius = 7.0
 
-[node name="Player" type="CharacterBody2D" groups=["player"]]
+[node name="Player" type="CharacterBody2D" groups=["Player"]]
 collision_layer = 2
 motion_mode = 1
 script = ExtResource("1_4ws04")
@@ -39,11 +38,9 @@ one_shot = true
 [node name="HealthComponent" parent="." instance=ExtResource("2_che35")]
 MaxHeath = 10
 
-[node name="AbilityManager" type="Node" parent="."]
+[node name="Abilities" type="Node" parent="."]
 
-[node name="SwordAbilityController" parent="AbilityManager" instance=ExtResource("2_yco4e")]
-
-[node name="AxeAbilityController" parent="AbilityManager" instance=ExtResource("4_bwu6f")]
+[node name="SwordAbilityController" parent="Abilities" instance=ExtResource("2_yco4e")]
 
 [node name="HealthBar" type="ProgressBar" parent="."]
 custom_minimum_size = Vector2(16, 4)

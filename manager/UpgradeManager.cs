@@ -1,5 +1,7 @@
 using Godot;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using Godot.Collections;
 
 public partial class UpgradeManager : Node {
@@ -7,7 +9,8 @@ public partial class UpgradeManager : Node {
     [Export] public ExperienceManager ExperienceManager;
     [Export] public PackedScene UpgradeScreenScene;
 
-    public Dictionary<string, UpgradeDictValue> Upgrades { get; private set; } = new();
+    public Godot.Collections.Dictionary<string, UpgradeDictValue> Upgrades { get; private set; } = new();
+    public Node AbilitysNode { get; private set; }
 
     public override void _Ready()
     {
@@ -15,17 +18,35 @@ public partial class UpgradeManager : Node {
     }
 
     private void OnLevelUp(float newLevel) {
-        var chosen = AbilityUpgradePool.PickRandom();
-        if (chosen is null) {
-            return;
-        }
+       
 
-        Array<AbilityUpgrade> upgrades = new Array<AbilityUpgrade> { chosen };
+        Array<AbilityUpgrade> upgrades = PickUpThreeDifferentAbilityUpgrades();
         UpgradeScreen upgradeScreen = UpgradeScreenScene.Instantiate<UpgradeScreen>();
         AddChild(upgradeScreen);
         upgradeScreen.UpgradeSelected += OnUpgradeSelected;
         upgradeScreen.ShowAbilityUpgrades(upgrades);
         // 暂停游戏
+    }
+
+    private Array<AbilityUpgrade> PickUpThreeDifferentAbilityUpgrades()
+    {
+        Array<AbilityUpgrade> result = new Array<AbilityUpgrade>();
+        
+        Array<AbilityUpgrade> pool = AbilityUpgradePool.Duplicate();
+
+        for (int i = 0; i < 3; i++)
+        {
+            if (pool.Count == 0)
+            {
+                return result;
+            }
+            AbilityUpgrade chosen = pool.PickRandom();
+            result.Add(chosen);
+            List<AbilityUpgrade> filter = pool
+                .Where(ability => !ability.Id.Equals(chosen.Id)).ToList();
+            pool = new Array<AbilityUpgrade>(filter);
+        }
+        return result;
     }
 
     private void OnUpgradeSelected(AbilityUpgrade abilityUpgrade) {
@@ -38,6 +59,15 @@ public partial class UpgradeManager : Node {
         }
         else {
             Upgrades[abilityUpgrade.Id] = new UpgradeDictValue(abilityUpgrade.Id, 1, abilityUpgrade);
+        }
+
+        UpgradeDictValue value = Upgrades[abilityUpgrade.Id];
+        // 达到上限，从池子中移除
+        if (value.Quantity == abilityUpgrade.MaxQuantity)
+        {
+            List<AbilityUpgrade> filter = AbilityUpgradePool
+                .Where(ability => !ability.Id.Equals(value.Id)).ToList();
+            AbilityUpgradePool = new Array<AbilityUpgrade>(filter);
         }
         GetNode<GameEvents>("/root/GameEvents").EmitAbilityUpgradeAdded(abilityUpgrade, Upgrades);
     }

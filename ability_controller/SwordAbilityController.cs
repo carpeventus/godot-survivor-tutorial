@@ -7,6 +7,7 @@ using Godot.Collections;
 public partial class SwordAbilityController : Node
 {
 	[Export] public string AbilityId = "SwordRate";
+	
 	[Export(PropertyHint.Range, "0.0,1.0,0.01")] public float IncreaseRate = 0.1f;
 	
 	[Export(PropertyHint.Range, "0.0,1.0,0.01")] public float MinAttackRate = 0.2f;
@@ -32,6 +33,8 @@ public partial class SwordAbilityController : Node
 			return;
 		}
 
+		GD.Print(abilityUpgrade.Id);
+		
 		UpgradeDictValue dictValue = currentUpgrades[AbilityId];
 
 		float increaseRate = dictValue.Quantity* IncreaseRate;
@@ -42,7 +45,7 @@ public partial class SwordAbilityController : Node
 
 
 	private void OnTimerOut() {
-		if (GetTree().GetFirstNodeInGroup("player") is Player player) {
+		if (GetTree().GetFirstNodeInGroup("Player") is Player player) {
 			Array<Node> enemies = GetTree().GetNodesInGroup("basic_enemy");
 			// 在攻击范围内按照距离排序
 			List<Node2D> nearEnemy = enemies

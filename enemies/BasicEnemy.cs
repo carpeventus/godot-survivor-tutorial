@@ -17,7 +17,7 @@ public partial class BasicEnemy : CharacterBody2D {
 	}
 
 	private Vector2 GetDirectionToPlayer() {
-		if (GetTree().GetFirstNodeInGroup("player") is Player player) {
+		if (GetTree().GetFirstNodeInGroup("Player") is Player player) {
 			return (player.GlobalPosition - GlobalPosition).Normalized();
 		}
 		return Vector2.Zero;

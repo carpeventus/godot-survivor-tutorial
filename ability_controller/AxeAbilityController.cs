@@ -13,7 +13,7 @@ public partial class AxeAbilityController : Node {
     }
 
     private void OnTimerTimeout() {
-        if (GetTree().GetFirstNodeInGroup("player") is not Player player) {
+        if (GetTree().GetFirstNodeInGroup("Player") is not Player player) {
             return;
         }
         
