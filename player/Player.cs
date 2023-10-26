@@ -88,7 +88,7 @@ public partial class Player : CharacterBody2D
 
 	public override void _PhysicsProcess(double delta) {
 		var targetVelocity = Direction * MoveSpeed;
-		Velocity = Velocity.Lerp(targetVelocity, (float)(1 - Mathf.Exp(-delta * 20)));
+		Velocity = Velocity.Lerp(targetVelocity, (float)(1 - Mathf.Exp(-Acceleration * delta * 20)));
 		MoveAndSlide();
 	}
 

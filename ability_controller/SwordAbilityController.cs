@@ -43,7 +43,7 @@ public partial class SwordAbilityController : Node
 
 	private void OnTimerOut() {
 		if (GetTree().GetFirstNodeInGroup("Player") is Player player) {
-			Array<Node> enemies = GetTree().GetNodesInGroup("basic_enemy");
+			Array<Node> enemies = GetTree().GetNodesInGroup("Enemy");
 			// 在攻击范围内按照距离排序
 			List<Node2D> nearEnemy = enemies
 				.Where(e => e is Node2D node2D && InAttackRange(node2D, player))

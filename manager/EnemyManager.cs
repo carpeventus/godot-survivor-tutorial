@@ -1,28 +1,40 @@
 using Godot;
-using System;
-using System.Collections.Generic;
 using Godot.Collections;
 
 public partial class EnemyManager : Node {
+	#region EnemyScene
 	[Export] public PackedScene BasicEnemyScene;
+	[Export] public PackedScene WizardEnemyScene;
+
+	#endregion
+
 	[Export] public ArenaTimeManager ArenaTimeManager;
 
 	private Timer _timer;
 
 	private double _baseSpawnTime;
-	// Called when the node enters the scene tree for the first time.
+
+	public EnemyWeightTable EnemyWeightTable { get; private set; } = new ();
 	public override void _Ready()
 	{
 		_timer = GetNode<Timer>("Timer");
 		_timer.Timeout += OnTimeout;
 		ArenaTimeManager.ArenaDifficultyUp += OnArenaDifficultyUp;
 		_baseSpawnTime = _timer.WaitTime;
+		// Add Enemy
+		EnemyWeightTable.AddItem(new EnemyWeight(BasicEnemyScene, 10));
 	}
 
 	private void OnArenaDifficultyUp(int difficulty)
 	{
 		var timeOffset = (0.1 / 12) * difficulty;
 		_timer.WaitTime = Mathf.Max(_timer.WaitTime - timeOffset, 0.5);
+		// 3级产生巫师
+		if (difficulty == 2)
+		{
+			EnemyWeightTable.AddItem(new EnemyWeight(WizardEnemyScene, 20));
+		}
+		
 	}
 
 	private void OnTimeout() {
@@ -30,9 +42,13 @@ public partial class EnemyManager : Node {
 		
 		var entities = GetTree().GetFirstNodeInGroup("EntitiesLayer");
 		// 视口尺寸的3/2 * 随机方向 + 玩家位置 
-		Node2D enemy = BasicEnemyScene.Instantiate<Node2D>();
-		entities.AddChild(enemy);
-		enemy.Position = GetSpawnPosition();
+		PackedScene enemyScene = EnemyWeightTable.PickItem();
+		Node2D enemy = enemyScene?.Instantiate<Node2D>();
+		if (enemy is not null)
+		{
+			entities.AddChild(enemy);
+			enemy.Position = GetSpawnPosition();
+		}
 	}
 
 	private Vector2 GetSpawnPosition()
