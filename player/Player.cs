@@ -17,6 +17,8 @@ public partial class Player : CharacterBody2D
 	public ProgressBar HealthBar { get; private set; }
 
 	public Node AbilitiesNode { get; private set; }
+	public AnimationPlayer AnimationPlayer { get; private set; }
+	public Node2D SpriteWrap { get; private set; }
 	
 	public override void _Ready()
 	{
@@ -25,6 +27,8 @@ public partial class Player : CharacterBody2D
 		Health = GetNode<HealthComponent>("HealthComponent");
 		HealthBar = GetNode<ProgressBar>("HealthBar");
 		AbilitiesNode = GetNode<Node>("Abilities");
+		AnimationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
+		SpriteWrap = GetNode<Node2D>("SpriteWrap");
 		// 敌人是Body
 		PlayerHurtArea.BodyEntered += OnEnemyBodyEntered;
 		PlayerHurtArea.BodyExited += OnEnemyBodyExited;
@@ -44,12 +48,7 @@ public partial class Player : CharacterBody2D
 		
 		AbilitiesNode.AddChild(ability.AbilityControllerScene.Instantiate());
 	}
-
-
-	private void OnPlayerDied() {
-		
-	}
-
+	
 	private void OnHealthChanged()
 	{
 		UpdateHealthBarDisplay();
@@ -95,6 +94,20 @@ public partial class Player : CharacterBody2D
 
 	public override void _Process(double delta) {
 		HandleInput();
+		if (Mathf.IsZeroApprox(Velocity.Length()))
+		{
+			AnimationPlayer.Play("RESET");
+		}
+		else
+		{
+			AnimationPlayer.Play("walk");
+		}
+
+		int sign = Mathf.Sign(Velocity.X);
+		if (sign != 0)
+		{
+			SpriteWrap.Scale = new Vector2(sign, 1);
+		}
 	}
 
 	private void HandleInput() {

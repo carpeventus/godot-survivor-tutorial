@@ -1,9 +1,10 @@
-[gd_scene load_steps=8 format=3 uid="uid://wx52d1nhvecm"]
+[gd_scene load_steps=12 format=3 uid="uid://wx52d1nhvecm"]
 
 [ext_resource type="Script" path="res://enemies/BasicEnemy.cs" id="1_bw4cv"]
 [ext_resource type="Texture2D" uid="uid://drqhs5fs13csm" path="res://sprites/Tiles/tile_0124.png" id="1_t7m5k"]
 [ext_resource type="PackedScene" uid="uid://t0afa6wm0tlm" path="res://component/hurt_box.tscn" id="2_rxbrm"]
-[ext_resource type="Script" path="res://component/HealthComponent.cs" id="4_2vlgp"]
+[ext_resource type="PackedScene" uid="uid://8f364lj07xs0" path="res://component/health_component.tscn" id="3_jecvb"]
+[ext_resource type="PackedScene" uid="uid://coc5gv3cfsbyp" path="res://component/death_component.tscn" id="5_h2sx7"]
 [ext_resource type="PackedScene" uid="uid://dmjra5qi6grob" path="res://component/vial_drop_component.tscn" id="5_v23a3"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_7rtjs"]
@@ -11,6 +12,68 @@ radius = 9.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_5d4j2"]
 radius = 6.0
+
+[sub_resource type="Animation" id="Animation_33dkc"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("SpriteWrap/Sprite2D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("SpriteWrap/Sprite2D:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="Animation" id="Animation_5pcml"]
+resource_name = "walk"
+length = 0.4
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("SpriteWrap/Sprite2D:position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(-2, 0), Vector2(2, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("SpriteWrap/Sprite2D:rotation")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [0.261799, -0.261799, 0.261799, -0.261799]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_a6dyu"]
+_data = {
+"RESET": SubResource("Animation_33dkc"),
+"walk": SubResource("Animation_5pcml")
+}
 
 [node name="BasicEnemy" type="CharacterBody2D" groups=["basic_enemy"]]
 collision_layer = 4
@@ -23,19 +86,29 @@ HealthComponent = NodePath("../HealthComponent")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox"]
 shape = SubResource("CircleShape2D_7rtjs")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
-texture = ExtResource("1_t7m5k")
-offset = Vector2(2.08165e-12, -4)
-
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, -5)
 shape = SubResource("CircleShape2D_5d4j2")
 
-[node name="HealthComponent" type="Node" parent="."]
-script = ExtResource("4_2vlgp")
+[node name="HealthComponent" parent="." instance=ExtResource("3_jecvb")]
 MaxHeath = 10
 
 [node name="VialDropComponent" parent="." node_paths=PackedStringArray("HealthComponent") instance=ExtResource("5_v23a3")]
 HealthComponent = NodePath("../HealthComponent")
+
+[node name="DeathComponent" parent="." node_paths=PackedStringArray("HealthComponent", "Sprite") instance=ExtResource("5_h2sx7")]
+HealthComponent = NodePath("../HealthComponent")
+Sprite = NodePath("../SpriteWrap/Sprite2D")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_a6dyu")
+}
+
+[node name="SpriteWrap" type="Node2D" parent="."]
+
+[node name="Sprite2D" type="Sprite2D" parent="SpriteWrap"]
+texture = ExtResource("1_t7m5k")
+offset = Vector2(2.08165e-12, -4)
 
 [editable path="HurtBox"]

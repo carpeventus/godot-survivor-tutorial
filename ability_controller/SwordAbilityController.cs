@@ -32,9 +32,6 @@ public partial class SwordAbilityController : Node
 		{
 			return;
 		}
-
-		GD.Print(abilityUpgrade.Id);
-		
 		UpgradeDictValue dictValue = currentUpgrades[AbilityId];
 
 		float increaseRate = dictValue.Quantity* IncreaseRate;
