@@ -29,9 +29,10 @@ public partial class EnemyManager : Node {
 	{
 		var timeOffset = (0.1 / 12) * difficulty;
 		_timer.WaitTime = Mathf.Max(_timer.WaitTime - timeOffset, 0.5);
-		// 3级产生巫师
-		if (difficulty == 2)
+		// 6级产生巫师
+		if (difficulty == 6)
 		{
+			GD.Print("Add Wizard");
 			EnemyWeightTable.AddItem(new EnemyWeight(WizardEnemyScene, 20));
 		}
 		

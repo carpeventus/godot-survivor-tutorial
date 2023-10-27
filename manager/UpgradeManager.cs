@@ -17,8 +17,6 @@ public partial class UpgradeManager : Node {
     }
 
     private void OnLevelUp(float newLevel) {
-       
-
         Array<AbilityUpgrade> upgrades = PickUpThreeDifferentAbilityUpgrades();
         UpgradeScreen upgradeScreen = UpgradeScreenScene.Instantiate<UpgradeScreen>();
         AddChild(upgradeScreen);

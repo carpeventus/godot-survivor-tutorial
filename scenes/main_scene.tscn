@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://uj516r67cetj"]
+[gd_scene load_steps=16 format=3 uid="uid://uj516r67cetj"]
 
 [ext_resource type="Script" path="res://scenes/MainScene.cs" id="1_84enw"]
 [ext_resource type="PackedScene" uid="uid://canfw7tyhuqp1" path="res://ui/arena_time_ui.tscn" id="1_dyif1"]
@@ -14,6 +14,7 @@
 [ext_resource type="PackedScene" uid="uid://c5tht4ymiir7p" path="res://ui/upgrade_screen.tscn" id="8_vabwa"]
 [ext_resource type="PackedScene" uid="uid://dg6ckmuu7u4ck" path="res://ui/end_screen.tscn" id="8_xdfc3"]
 [ext_resource type="PackedScene" uid="uid://wx52d1nhvecm" path="res://enemies/basic_enemy.tscn" id="12_lpucc"]
+[ext_resource type="PackedScene" uid="uid://c0mywag0qul0g" path="res://enemies/wizard_enemy.tscn" id="13_nehbi"]
 
 [node name="MainScene" type="Node2D"]
 script = ExtResource("1_84enw")
@@ -39,6 +40,7 @@ EndScreenScene = ExtResource("8_xdfc3")
 
 [node name="EnemyManager" parent="Managers" node_paths=PackedStringArray("ArenaTimeManager") instance=ExtResource("3_k2k6a")]
 BasicEnemyScene = ExtResource("12_lpucc")
+WizardEnemyScene = ExtResource("13_nehbi")
 ArenaTimeManager = NodePath("../ArenaTimeManager")
 
 [node name="Camera2D" type="Camera2D" parent="."]

@@ -106,7 +106,7 @@ border_color = Color(0.247059, 0.14902, 0.192157, 1)
 radius = 5.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_p0loq"]
-radius = 12.0
+radius = 29.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_a1tqw"]
 radius = 7.0
@@ -165,9 +165,11 @@ position = Vector2(0, -7)
 shape = SubResource("CircleShape2D_p0loq")
 
 [node name="PlayerHurtArea" type="Area2D" parent="."]
+visible = false
 collision_layer = 0
 collision_mask = 4
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerHurtArea"]
+visible = false
 position = Vector2(0, -7)
 shape = SubResource("CircleShape2D_a1tqw")

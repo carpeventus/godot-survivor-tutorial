@@ -31,6 +31,10 @@ window/stretch/mode="viewport"
 
 project/assembly_name="Surviviors2D"
 
+[gui]
+
+theme/custom="res://font/theme.tres"
+
 [input]
 
 move_left={

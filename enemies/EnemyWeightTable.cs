@@ -19,7 +19,6 @@ public partial class EnemyWeightTable : GodotObject
     {
         var chosenWeight = GD.RandRange(1, _totalWeight);
         var list = new List<EnemyWeight>(Items);
-        GD.Print(list.Count);
         list.Sort((a, b) => a.Weight.CompareTo(b.Weight));
 
         var itemsWeight = 0;
@@ -28,7 +27,6 @@ public partial class EnemyWeightTable : GodotObject
             itemsWeight += item.Weight;
             if (itemsWeight >= chosenWeight)
             {
-                GD.Print(chosenWeight + " " + itemsWeight);
                 return item.Item;
             }
         }
