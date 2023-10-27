@@ -30,7 +30,7 @@ public partial class EndScreen : CanvasLayer {
 
 	private void OnRestartButtonPressed() {
 		GetTree().Paused = false;
-		GetTree().ChangeSceneToFile("res://scenes/main_scene.tscn");
+		GetTree().ReloadCurrentScene();
 	}
 	
 	private void OnQuitButtonPressed() {

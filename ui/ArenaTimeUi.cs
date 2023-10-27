@@ -20,7 +20,7 @@ public partial class ArenaTimeUi : CanvasLayer {
 
 	private string FormatTime(double time) {
 		var minute = Mathf.FloorToInt(time / 60);
-		var second = Mathf.FloorToInt(time % 60);
+		var second = Mathf.CeilToInt(time % 60);
 		return $"{minute:00}" + " : " + $"{second:00}";
 	}
 }
