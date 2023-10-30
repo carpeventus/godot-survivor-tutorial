@@ -2,7 +2,11 @@ using Godot;
 
 public partial class HurtBox : Area2D {
 	[Export] public HealthComponent HealthComponent;
-	public override void _Ready() {
+
+	public PackedScene FloatingTextScene;
+	public override void _Ready()
+	{
+		FloatingTextScene = ResourceLoader.Load<PackedScene>("res://ui/floating_text.tscn");
 		AreaEntered += OnHurt;
 	}
 
@@ -11,5 +15,9 @@ public partial class HurtBox : Area2D {
 			return;
 		}
         HealthComponent?.TakeDamage(hitBox.Damage);
+        var floatingText = FloatingTextScene.Instantiate<FloatingText>();
+        GetTree().GetFirstNodeInGroup("EntitiesLayer").AddChild(floatingText);
+        floatingText.GlobalPosition = hitBox.GlobalPosition + Vector2.Up * 8;
+        floatingText.Start(hitBox.Damage.ToString());
 	}
 }
