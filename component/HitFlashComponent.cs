@@ -16,7 +16,6 @@ public partial class HitFlashComponent : Node {
 			RunningTween.Kill();
 		}
 		HitFlashShader.SetShaderParameter("weight", 1.0);
-		GD.Print(HitFlashShader.GetShaderParameter("weight"));
 		RunningTween = CreateTween();
 		RunningTween.TweenProperty(Sprite.Material, "shader_parameter/weight", 0.0, 0.2)
 			.SetEase(Tween.EaseType.In).SetTrans(Tween.TransitionType.Cubic);

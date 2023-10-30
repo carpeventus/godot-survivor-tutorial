@@ -104,7 +104,7 @@ Health = NodePath("../HealthComponent")
 HitFlashShader = SubResource("ShaderMaterial_8cich")
 
 [node name="HealthComponent" parent="." instance=ExtResource("3_jecvb")]
-MaxHeath = 10
+MaxHeath = 20
 
 [node name="VialDropComponent" parent="." node_paths=PackedStringArray("HealthComponent") instance=ExtResource("5_v23a3")]
 HealthComponent = NodePath("../HealthComponent")
@@ -119,6 +119,7 @@ Sprite = NodePath("../SpriteWrap/Sprite2D")
 libraries = {
 "": SubResource("AnimationLibrary_a6dyu")
 }
+autoplay = "walk"
 
 [node name="SpriteWrap" type="Node2D" parent="."]
 
