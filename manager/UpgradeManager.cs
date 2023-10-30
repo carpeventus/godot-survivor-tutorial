@@ -4,20 +4,34 @@ using System.Linq;
 using Godot.Collections;
 
 public partial class UpgradeManager : Node {
-    [Export] public Array<AbilityUpgrade> AbilityUpgradePool;
+    
     [Export] public ExperienceManager ExperienceManager;
     [Export] public PackedScene UpgradeScreenScene;
 
+    public WeightTable<AbilityUpgrade> AbilityUpgradePool { get; private set; } = new();
+    
+    public AbilityUpgrade AxeAbilityUpgrade { get; private set; } 
+    public AbilityUpgrade SwordRateUpgrade { get; private set; } 
+    public AbilityUpgrade SwordDamageUpgrade { get; private set; } 
+    public AbilityUpgrade AxeDamageUpgrade { get; private set; } 
+
     public Godot.Collections.Dictionary<string, UpgradeDictValue> Upgrades { get; private set; } = new();
-    public Node AbilitysNode { get; private set; }
 
     public override void _Ready()
     {
+        AxeAbilityUpgrade = ResourceLoader.Load<AbilityUpgrade>("res://resources/upgrade/axe.tres");
+        SwordRateUpgrade = ResourceLoader.Load<AbilityUpgrade>("res://resources/upgrade/swordrate.tres");
+        SwordDamageUpgrade = ResourceLoader.Load<AbilityUpgrade>("res://resources/upgrade/sword_damage.tres");
+        AxeDamageUpgrade = ResourceLoader.Load<AbilityUpgrade>("res://resources/upgrade/axe_damage.tres");
+        
+        AbilityUpgradePool.AddItem(new ItemWeight<AbilityUpgrade>("AxeAbilityUpgrade", AxeAbilityUpgrade, 10));
+        AbilityUpgradePool.AddItem(new ItemWeight<AbilityUpgrade>("SwordRateUpgrade", SwordRateUpgrade, 10));
+        AbilityUpgradePool.AddItem(new ItemWeight<AbilityUpgrade>("AxeDamageUpgrade", AxeDamageUpgrade, 10));
         ExperienceManager.LevelUp += OnLevelUp;
     }
 
     private void OnLevelUp(float newLevel) {
-        Array<AbilityUpgrade> upgrades = PickUpThreeDifferentAbilityUpgrades();
+        Array<AbilityUpgrade> upgrades = PickUpDifferentAbilityUpgrades();
         UpgradeScreen upgradeScreen = UpgradeScreenScene.Instantiate<UpgradeScreen>();
         AddChild(upgradeScreen);
         upgradeScreen.UpgradeSelected += OnUpgradeSelected;
@@ -25,25 +39,22 @@ public partial class UpgradeManager : Node {
         // 暂停游戏
     }
 
-    private Array<AbilityUpgrade> PickUpThreeDifferentAbilityUpgrades()
+    private Array<AbilityUpgrade> PickUpDifferentAbilityUpgrades()
     {
-        Array<AbilityUpgrade> result = new Array<AbilityUpgrade>();
-        
-        Array<AbilityUpgrade> pool = AbilityUpgradePool.Duplicate();
-
+        Array<AbilityUpgrade> chosenResult = new Array<AbilityUpgrade>();
         for (int i = 0; i < 3; i++)
         {
-            if (pool.Count == 0)
+            if (AbilityUpgradePool.Items.Count == 0)
             {
-                return result;
+                return chosenResult;
             }
-            AbilityUpgrade chosen = pool.PickRandom();
-            result.Add(chosen);
-            List<AbilityUpgrade> filter = pool
-                .Where(ability => !ability.Id.Equals(chosen.Id)).ToList();
-            pool = new Array<AbilityUpgrade>(filter);
+
+            var chosenIds = chosenResult.Select(a => a.Id).ToHashSet();
+            // 在一次选择中，不重复出现相同的技能
+            AbilityUpgrade chosen = AbilityUpgradePool.PickItem(chosenIds);
+            chosenResult.Add(chosen);
         }
-        return result;
+        return chosenResult;
     }
 
     private void OnUpgradeSelected(AbilityUpgrade abilityUpgrade) {
@@ -62,23 +73,32 @@ public partial class UpgradeManager : Node {
         // 达到上限，从池子中移除
         if (value.Quantity == abilityUpgrade.MaxQuantity)
         {
-            List<AbilityUpgrade> filter = AbilityUpgradePool
-                .Where(ability => !ability.Id.Equals(value.Id)).ToList();
-            AbilityUpgradePool = new Array<AbilityUpgrade>(filter);
+            AbilityUpgradePool.RemoveItem(abilityUpgrade.Id);
         }
+
+        UpdateUpgradeAbility(abilityUpgrade);
         GetNode<GameEvents>("/root/GameEvents").EmitAbilityUpgradeAdded(abilityUpgrade, Upgrades);
     }
-    
+
+    private void UpdateUpgradeAbility(AbilityUpgrade chosen)
+    {
+        // 只有当拥有斧头后才能升级斧头相关的能力
+        if (chosen.Id.Equals(AxeAbilityUpgrade.Id))
+        {
+            AbilityUpgradePool.AddItem(new ItemWeight<AbilityUpgrade>("AxeDamageUpgrade", AxeDamageUpgrade, 10));
+
+        }
+    }
 }
 
 public partial class UpgradeDictValue: GodotObject {
     public string Id { get; set; }
     public int Quantity { get; set; }
-    public AbilityUpgrade Resource { get; set; }
+    public AbilityUpgrade AbilityUpgradeResource { get; set; }
 
-    public UpgradeDictValue(string id, int quantity, AbilityUpgrade resource) {
+    public UpgradeDictValue(string id, int quantity, AbilityUpgrade abilityUpgradeResource) {
         Id = id;
         Quantity = quantity;
-        Resource = resource;
+        AbilityUpgradeResource = abilityUpgradeResource;
     }
 }

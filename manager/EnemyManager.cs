@@ -14,7 +14,7 @@ public partial class EnemyManager : Node {
 
 	private double _baseSpawnTime;
 
-	public EnemyWeightTable EnemyWeightTable { get; private set; } = new ();
+	public WeightTable<PackedScene> WeightTable { get; private set; } = new ();
 	public override void _Ready()
 	{
 		_timer = GetNode<Timer>("Timer");
@@ -22,7 +22,7 @@ public partial class EnemyManager : Node {
 		ArenaTimeManager.ArenaDifficultyUp += OnArenaDifficultyUp;
 		_baseSpawnTime = _timer.WaitTime;
 		// Add Enemy
-		EnemyWeightTable.AddItem(new EnemyWeight(BasicEnemyScene, 10));
+		WeightTable.AddItem(new ItemWeight<PackedScene>("BasicEnemyScene", BasicEnemyScene, 10));
 	}
 
 	private void OnArenaDifficultyUp(int difficulty)
@@ -32,8 +32,7 @@ public partial class EnemyManager : Node {
 		// 6级产生巫师
 		if (difficulty == 6)
 		{
-			GD.Print("Add Wizard");
-			EnemyWeightTable.AddItem(new EnemyWeight(WizardEnemyScene, 20));
+			WeightTable.AddItem(new ItemWeight<PackedScene>("WizardEnemyScene", WizardEnemyScene, 20));
 		}
 		
 	}
@@ -43,7 +42,7 @@ public partial class EnemyManager : Node {
 		
 		var entities = GetTree().GetFirstNodeInGroup("EntitiesLayer");
 		// 视口尺寸的3/2 * 随机方向 + 玩家位置 
-		PackedScene enemyScene = EnemyWeightTable.PickItem();
+		PackedScene enemyScene = WeightTable.PickItem();
 		Node2D enemy = enemyScene?.Instantiate<Node2D>();
 		if (enemy is not null)
 		{
