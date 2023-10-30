@@ -1,9 +1,11 @@
-[gd_scene load_steps=13 format=3 uid="uid://wx52d1nhvecm"]
+[gd_scene load_steps=16 format=3 uid="uid://wx52d1nhvecm"]
 
 [ext_resource type="Script" path="res://enemies/BasicEnemy.cs" id="1_bw4cv"]
 [ext_resource type="Texture2D" uid="uid://drqhs5fs13csm" path="res://sprites/Tiles/tile_0124.png" id="1_t7m5k"]
 [ext_resource type="PackedScene" uid="uid://t0afa6wm0tlm" path="res://component/hurt_box.tscn" id="2_rxbrm"]
 [ext_resource type="PackedScene" uid="uid://8f364lj07xs0" path="res://component/health_component.tscn" id="3_jecvb"]
+[ext_resource type="PackedScene" uid="uid://bnssp23frskif" path="res://component/hit_flash_component.tscn" id="3_mfwyt"]
+[ext_resource type="Shader" path="res://component/hit_flash_component.gdshader" id="4_knjdu"]
 [ext_resource type="PackedScene" uid="uid://bm3dxrj4rg7ax" path="res://component/velocity_component.tscn" id="5_4b61s"]
 [ext_resource type="PackedScene" uid="uid://coc5gv3cfsbyp" path="res://component/death_component.tscn" id="5_h2sx7"]
 [ext_resource type="PackedScene" uid="uid://dmjra5qi6grob" path="res://component/vial_drop_component.tscn" id="5_v23a3"]
@@ -13,6 +15,11 @@ radius = 9.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_5d4j2"]
 radius = 6.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_8cich"]
+resource_local_to_scene = true
+shader = ExtResource("4_knjdu")
+shader_parameter/weight = 0.0
 
 [sub_resource type="Animation" id="Animation_33dkc"]
 length = 0.001
@@ -90,6 +97,11 @@ shape = SubResource("CircleShape2D_7rtjs")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, -5)
 shape = SubResource("CircleShape2D_5d4j2")
+
+[node name="HitFlashComponent" parent="." node_paths=PackedStringArray("Sprite", "Health") instance=ExtResource("3_mfwyt")]
+Sprite = NodePath("../SpriteWrap/Sprite2D")
+Health = NodePath("../HealthComponent")
+HitFlashShader = SubResource("ShaderMaterial_8cich")
 
 [node name="HealthComponent" parent="." instance=ExtResource("3_jecvb")]
 MaxHeath = 10
