@@ -30,7 +30,7 @@ public partial class EndScreen : CanvasLayer {
 
 	private void OnRestartButtonPressed() {
 		GetTree().Paused = false;
-		GetTree().ReloadCurrentScene();
+		GetTree().CallDeferred(SceneTree.MethodName.ReloadCurrentScene);
 	}
 	
 	private void OnQuitButtonPressed() {

@@ -57,7 +57,7 @@ Damage = 20
 shape = SubResource("CircleShape2D_7s4w6")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-autoplay = "rotate"
 libraries = {
 "": SubResource("AnimationLibrary_xqscf")
 }
+autoplay = "rotate"

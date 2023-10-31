@@ -119,10 +119,10 @@ shape = SubResource("RectangleShape2D_mjvci")
 disabled = true
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-autoplay = "swing"
 libraries = {
 "": SubResource("AnimationLibrary_nkrki")
 }
+autoplay = "swing"
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("1_y3occ")

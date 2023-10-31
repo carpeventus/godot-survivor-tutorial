@@ -8,7 +8,12 @@ public partial class AxeAbility : Node2D
     [Export] public float MaxRadius = 100f;
 
     private Vector2 _baseRotateInitDirection = Vector2.Right;
-    public override void _Ready() {
+    
+    public HitBox HitBox { get; private set; }
+    
+    public override void _Ready()
+    {
+        HitBox = GetNode<HitBox>("HitBox");
         _baseRotateInitDirection = Vector2.Right.Rotated(GD.Randf() * Mathf.Tau);
         Tween tween = CreateTween();
         tween.TweenMethod(Callable.From<float>(RotateAndIncreaseRadius), 0.0f, RotationCircle, 3f);
