@@ -14,15 +14,23 @@ public partial class FloatingText : Node2D
 		tween.TweenProperty(this, "global_position", GlobalPosition + Vector2.Up * 8, 0.3f)
 			.SetEase(Tween.EaseType.Out)
 			.SetTrans(Tween.TransitionType.Cubic);
-
+		tween.TweenProperty(this, "scale", Vector2.One, 0.3f)
+			.SetEase(Tween.EaseType.Out)
+			.SetTrans(Tween.TransitionType.Cubic);
+		tween.TweenProperty(this, "modulate", new Color(1, 1, 1), 0.3f)
+			.SetEase(Tween.EaseType.In)
+			.SetTrans(Tween.TransitionType.Cubic);
 
 		tween.Chain();
-		tween.TweenProperty(this, "global_position", GlobalPosition + Vector2.Up * 24, 0.5f)
+		tween.TweenProperty(this, "global_position", GlobalPosition + Vector2.Up * 32, 0.5f)
 			.SetEase(Tween.EaseType.In)
 			.SetTrans(Tween.TransitionType.Cubic);
 		tween.TweenProperty(this, "scale", Vector2.Zero, 0.5f)
 			.SetEase(Tween.EaseType.Out)
-			.SetTrans(Tween.TransitionType.Elastic);
+			.SetTrans(Tween.TransitionType.Cubic);
+		tween.TweenProperty(this, "modulate", new Color(1, 1, 1, 0), 0.5f)
+			.SetEase(Tween.EaseType.Out)
+			.SetTrans(Tween.TransitionType.Cubic);
 		
 		tween.Chain().TweenCallback(Callable.From(QueueFree));
 	}

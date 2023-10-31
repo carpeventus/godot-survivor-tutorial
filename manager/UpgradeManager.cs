@@ -23,10 +23,9 @@ public partial class UpgradeManager : Node {
         SwordRateUpgrade = ResourceLoader.Load<AbilityUpgrade>("res://resources/upgrade/swordrate.tres");
         SwordDamageUpgrade = ResourceLoader.Load<AbilityUpgrade>("res://resources/upgrade/sword_damage.tres");
         AxeDamageUpgrade = ResourceLoader.Load<AbilityUpgrade>("res://resources/upgrade/axe_damage.tres");
-        
-        AbilityUpgradePool.AddItem(new ItemWeight<AbilityUpgrade>("AxeAbilityUpgrade", AxeAbilityUpgrade, 10));
-        AbilityUpgradePool.AddItem(new ItemWeight<AbilityUpgrade>("SwordRateUpgrade", SwordRateUpgrade, 10));
-        AbilityUpgradePool.AddItem(new ItemWeight<AbilityUpgrade>("AxeDamageUpgrade", AxeDamageUpgrade, 10));
+        AbilityUpgradePool.AddItem(new ItemWeight<AbilityUpgrade>(AxeAbilityUpgrade.Id, AxeAbilityUpgrade, 10));
+        AbilityUpgradePool.AddItem(new ItemWeight<AbilityUpgrade>(SwordRateUpgrade.Id, SwordRateUpgrade, 10));
+        AbilityUpgradePool.AddItem(new ItemWeight<AbilityUpgrade>(SwordDamageUpgrade.Id, SwordDamageUpgrade, 10));
         ExperienceManager.LevelUp += OnLevelUp;
     }
 
@@ -44,7 +43,8 @@ public partial class UpgradeManager : Node {
         Array<AbilityUpgrade> chosenResult = new Array<AbilityUpgrade>();
         for (int i = 0; i < 3; i++)
         {
-            if (AbilityUpgradePool.Items.Count == 0)
+            // 池子里的被选完了
+            if (AbilityUpgradePool.Items.Count == chosenResult.Count)
             {
                 return chosenResult;
             }
@@ -52,7 +52,10 @@ public partial class UpgradeManager : Node {
             var chosenIds = chosenResult.Select(a => a.Id).ToHashSet();
             // 在一次选择中，不重复出现相同的技能
             AbilityUpgrade chosen = AbilityUpgradePool.PickItem(chosenIds);
-            chosenResult.Add(chosen);
+            if (chosen is not null)
+            {
+                chosenResult.Add(chosen);
+            }
         }
         return chosenResult;
     }
@@ -85,8 +88,7 @@ public partial class UpgradeManager : Node {
         // 只有当拥有斧头后才能升级斧头相关的能力
         if (chosen.Id.Equals(AxeAbilityUpgrade.Id))
         {
-            AbilityUpgradePool.AddItem(new ItemWeight<AbilityUpgrade>("AxeDamageUpgrade", AxeDamageUpgrade, 10));
-
+            AbilityUpgradePool.AddItem(new ItemWeight<AbilityUpgrade>(AxeDamageUpgrade.Id, AxeDamageUpgrade, 10));
         }
     }
 }
