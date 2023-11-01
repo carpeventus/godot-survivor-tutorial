@@ -38,6 +38,13 @@ public partial class Player : CharacterBody2D
 		UpdateHealthBarDisplay();
 	}
 
+	public override void _ExitTree()
+	{
+		base._ExitTree();
+		GetNode<GameEvents>("/root/GameEvents").AbilityUpgradeAdded -= OnAbilityUpgradeAdded;
+
+	}
+
 	private void OnAbilityUpgradeAdded(AbilityUpgrade abilityUpgrade, Dictionary<string, UpgradeDictValue> currentUpgrades)
 	{
 		

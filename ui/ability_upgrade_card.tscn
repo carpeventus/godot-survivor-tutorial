@@ -3,17 +3,41 @@
 [ext_resource type="Script" path="res://ui/AbilityUpgradeCard.cs" id="1_mqer6"]
 
 [node name="AbilityUpgradeCard" type="PanelContainer"]
-custom_minimum_size = Vector2(60, 80)
-offset_right = 100.0
-offset_bottom = 120.0
+custom_minimum_size = Vector2(100, 120)
+offset_right = 74.0
+offset_bottom = 80.0
 script = ExtResource("1_mqer6")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="."]
+[node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
 
-[node name="Name" type="Label" parent="VBoxContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
 layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 8
 
-[node name="Desc" type="Label" parent="VBoxContainer"]
+[node name="Panel" type="PanelContainer" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
+mouse_filter = 2
+theme_type_variation = &"AltPanelContainer"
+
+[node name="AbilityCardName" type="Label" parent="MarginContainer/VBoxContainer/Panel"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_outline_color = Color(0.14902, 0.168627, 0.266667, 1)
+theme_override_constants/outline_size = 4
+text = "Test"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="AbilityCardDesc" type="Label" parent="MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_outline_color = Color(0.14902, 0.168627, 0.266667, 1)
+theme_override_constants/outline_size = 4
+text = "Add More Test to display."
 autowrap_mode = 2

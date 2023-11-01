@@ -27,6 +27,13 @@ public partial class SwordAbilityController : Node
 		_defaultReloadTime = _reloadTimer.WaitTime;
 	}
 
+	public override void _ExitTree()
+	{
+		base._ExitTree();
+		GetNode<GameEvents>("/root/GameEvents").AbilityUpgradeAdded -= OnAbilityUpgradeAdded;
+
+	}
+
 	private void OnAbilityUpgradeAdded(AbilityUpgrade abilityUpgrade, Godot.Collections.Dictionary<string, UpgradeDictValue> currentUpgrades)
 	{
 		// 升级技能很多地方都在监听，这里需要过滤和自己有关的

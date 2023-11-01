@@ -8,8 +8,8 @@ public partial class AbilityUpgradeCard : PanelContainer {
     [Signal]
     public delegate void UpgradeCardSelectedEventHandler(); 
     public override void _Ready() {
-        _nameLabel = GetNode<Label>("VBoxContainer/Name");
-        _descLabel = GetNode<Label>("VBoxContainer/Desc");
+        _nameLabel = GetNode<Label>("%AbilityCardName");
+        _descLabel = GetNode<Label>("%AbilityCardDesc");
         GuiInput += OnGuiInput;
     }
 

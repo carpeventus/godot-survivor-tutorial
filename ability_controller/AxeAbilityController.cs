@@ -16,7 +16,14 @@ public partial class AxeAbilityController : Node
         GetNode<GameEvents>("/root/GameEvents").AbilityUpgradeAdded += OnAbilityUpgradeAdded;
 
     }
-    
+
+    public override void _ExitTree()
+    {
+        base._ExitTree();
+        GetNode<GameEvents>("/root/GameEvents").AbilityUpgradeAdded -= OnAbilityUpgradeAdded;
+
+    }
+
     private void OnAbilityUpgradeAdded(AbilityUpgrade abilityUpgrade, Godot.Collections.Dictionary<string, UpgradeDictValue> currentUpgrades)
     {
         // 升级技能很多地方都在监听，这里需要过滤和自己有关的

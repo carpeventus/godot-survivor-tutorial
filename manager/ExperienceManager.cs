@@ -13,7 +13,14 @@ public partial class ExperienceManager : Node {
 	public override void _Ready() {
 		GetNode<GameEvents>("/root/GameEvents").ExperienceVialCollected += OnCollectedExperience;
 	}
+
+	public override void _ExitTree()
+	{
+		base._ExitTree();
+		GetNode<GameEvents>("/root/GameEvents").ExperienceVialCollected -= OnCollectedExperience;
+	}
 	
+
 	private void OnCollectedExperience(float exNum) {
 		IncreasePlayerExperience(exNum);
 	}
