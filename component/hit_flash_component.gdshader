@@ -8,5 +8,3 @@ void fragment() {
 	COLOR = final_color;
 	// Called for every pixel the material is visible on.
 }
-
-

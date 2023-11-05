@@ -3,9 +3,6 @@ using Godot.Collections;
 
 public partial class Player : CharacterBody2D
 {
-	[Export] public float MoveSpeed = 60.0f;
-	[Export] public float Acceleration = 20.0f;
-	
 	public Vector2 InputMovement { get; private set; }
 	public Vector2 Direction { get; private set; }
 
@@ -19,9 +16,18 @@ public partial class Player : CharacterBody2D
 	public Node AbilitiesNode { get; private set; }
 	public AnimationPlayer AnimationPlayer { get; private set; }
 	public Node2D SpriteWrap { get; private set; }
+	public VelocityComponent VelocityComponent { get; private set; }
+
+	public float BaseSpeed = 0f;
+
+	#region MyRegion
+
+	private readonly string AbilityPlayerSpeedId = "PlayerSpeed";
 	
-	public override void _Ready()
-	{
+
+	#endregion
+	
+	public override void _Ready() {
 		PlayerHurtArea = GetNode<Area2D>("PlayerHurtArea");
 		DamageIntervalTimer = GetNode<Timer>("DamageIntervalTimer");
 		Health = GetNode<HealthComponent>("HealthComponent");
@@ -29,12 +35,17 @@ public partial class Player : CharacterBody2D
 		AbilitiesNode = GetNode<Node>("Abilities");
 		AnimationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
 		SpriteWrap = GetNode<Node2D>("SpriteWrap");
+		VelocityComponent = GetNode<VelocityComponent>("VelocityComponent");
 		// 敌人是Body
 		PlayerHurtArea.BodyEntered += OnEnemyBodyEntered;
 		PlayerHurtArea.BodyExited += OnEnemyBodyExited;
 		DamageIntervalTimer.Timeout += OnDamageIntervalTimerTimeout;
 		Health.HealthChange += OnHealthChanged;
 		GetNode<GameEvents>("/root/GameEvents").AbilityUpgradeAdded += OnAbilityUpgradeAdded;
+		
+		BaseSpeed = VelocityComponent.MaxSpeed;
+
+		
 		UpdateHealthBarDisplay();
 	}
 
@@ -47,17 +58,25 @@ public partial class Player : CharacterBody2D
 
 	private void OnAbilityUpgradeAdded(AbilityUpgrade abilityUpgrade, Dictionary<string, UpgradeDictValue> currentUpgrades)
 	{
-		
-		if (abilityUpgrade is not AbilityResource ability)
+		// 是能力就添加到玩家能力组件中
+		if (abilityUpgrade is AbilityResource ability)
 		{
-			return;
+			AbilitiesNode.AddChild(ability.AbilityControllerScene.Instantiate());
+		}
+		// 是玩家属性升级，如移动速度提升等，执行下面逻辑
+		else {
+			if (abilityUpgrade.Id.Equals(AbilityPlayerSpeedId)) {
+				 var dictValue = currentUpgrades[AbilityPlayerSpeedId];
+				 VelocityComponent.MaxSpeed = BaseSpeed + (BaseSpeed * dictValue.Quantity * 0.1f);
+			}
 		}
 		
-		AbilitiesNode.AddChild(ability.AbilityControllerScene.Instantiate());
 	}
 	
 	private void OnHealthChanged()
 	{
+		// TODO 这里血量变化不一定是受伤，还有可能捡到血瓶
+		GetNode<GameEvents>("/root/GameEvents").EmitPlayerHurt();
 		UpdateHealthBarDisplay();
 	}
 
@@ -94,9 +113,8 @@ public partial class Player : CharacterBody2D
 	}
 
 	public override void _PhysicsProcess(double delta) {
-		var targetVelocity = Direction * MoveSpeed;
-		Velocity = Velocity.Lerp(targetVelocity, (float)(1 - Mathf.Exp(-Acceleration * delta * 20)));
-		MoveAndSlide();
+		VelocityComponent.AccelerateInDirection(Direction);
+		VelocityComponent.Move(this);
 	}
 
 	public override void _Process(double delta) {

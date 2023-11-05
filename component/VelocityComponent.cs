@@ -8,7 +8,7 @@ public partial class VelocityComponent : Node
     
     public Vector2 BodyVelocity = Vector2.Zero;
 
-    private void AccelerateInDirection(Vector2 direction)
+    public void AccelerateInDirection(Vector2 direction)
     {
         var targetVelocity = MaxSpeed * direction;
         BodyVelocity = BodyVelocity.Lerp(targetVelocity, (float)(1 - Mathf.Exp(-Acceleration * GetProcessDeltaTime() * 20)));

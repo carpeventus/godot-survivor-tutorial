@@ -16,6 +16,7 @@ public partial class HealthComponent : Node
 	public void TakeDamage(int damage)
 	{
 		CurrentHeath = Mathf.Max(CurrentHeath - damage, 0);
+		
 		EmitSignal(SignalName.HealthChange);
 		if (CurrentHeath <= 0)
 		{ 

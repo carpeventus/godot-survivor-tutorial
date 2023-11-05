@@ -9,11 +9,17 @@ public partial class UpgradeManager : Node {
     [Export] public PackedScene UpgradeScreenScene;
 
     public WeightTable<AbilityUpgrade> AbilityUpgradePool { get; private set; } = new();
-    
+
+    #region MyRegion
+
     public AbilityUpgrade AxeAbilityUpgrade { get; private set; } 
     public AbilityUpgrade SwordRateUpgrade { get; private set; } 
     public AbilityUpgrade SwordDamageUpgrade { get; private set; } 
     public AbilityUpgrade AxeDamageUpgrade { get; private set; } 
+    public AbilityUpgrade PlayerSpeedUpgrade { get; private set; } 
+
+    #endregion
+
 
     public Godot.Collections.Dictionary<string, UpgradeDictValue> Upgrades { get; private set; } = new();
 
@@ -23,9 +29,12 @@ public partial class UpgradeManager : Node {
         SwordRateUpgrade = ResourceLoader.Load<AbilityUpgrade>("res://resources/upgrade/swordrate.tres");
         SwordDamageUpgrade = ResourceLoader.Load<AbilityUpgrade>("res://resources/upgrade/sword_damage.tres");
         AxeDamageUpgrade = ResourceLoader.Load<AbilityUpgrade>("res://resources/upgrade/axe_damage.tres");
+        PlayerSpeedUpgrade = ResourceLoader.Load<AbilityUpgrade>("res://resources/upgrade/player_speed.tres");
+        
         AbilityUpgradePool.AddItem(new ItemWeight<AbilityUpgrade>(AxeAbilityUpgrade.Id, AxeAbilityUpgrade, 10));
         AbilityUpgradePool.AddItem(new ItemWeight<AbilityUpgrade>(SwordRateUpgrade.Id, SwordRateUpgrade, 10));
         AbilityUpgradePool.AddItem(new ItemWeight<AbilityUpgrade>(SwordDamageUpgrade.Id, SwordDamageUpgrade, 10));
+        AbilityUpgradePool.AddItem(new ItemWeight<AbilityUpgrade>(PlayerSpeedUpgrade.Id, PlayerSpeedUpgrade, 5));
         ExperienceManager.LevelUp += OnLevelUp;
     }
 
@@ -35,7 +44,6 @@ public partial class UpgradeManager : Node {
         AddChild(upgradeScreen);
         upgradeScreen.UpgradeSelected += OnUpgradeSelected;
         upgradeScreen.ShowAbilityUpgrades(upgrades);
-        // 暂停游戏
     }
 
     private Array<AbilityUpgrade> PickUpDifferentAbilityUpgrades()

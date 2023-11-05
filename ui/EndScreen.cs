@@ -7,7 +7,10 @@ public partial class EndScreen : CanvasLayer {
 	private Button _quitButton;
 	private Label _endText;
 	private Label _endDesc;
+
+	private PanelContainer _panelContainer;
 	public override void _Ready() {
+		_panelContainer = GetNode<PanelContainer>("MarginContainer/PanelContainer");
 		_restartButton = GetNode<Button>("%RestartButton");
 		_quitButton = GetNode<Button>("%QuitButton");
 		_endText = GetNode<Label>("%EndText");
@@ -15,7 +18,18 @@ public partial class EndScreen : CanvasLayer {
 		
 		_restartButton.Pressed += OnRestartButtonPressed;
 		_quitButton.Pressed += OnQuitButtonPressed;
+		_panelContainer.PivotOffset = _panelContainer.Size / 2;
+		TweenAnimation();
 		GetTree().Paused = true;
+	}
+
+	private void TweenAnimation() {
+
+		var tween = CreateTween();
+		tween.TweenProperty(_panelContainer, "scale", Vector2.Zero, 0);
+		tween.TweenProperty(_panelContainer, "scale", Vector2.One, 0.3)
+			.SetEase(Tween.EaseType.Out)
+			.SetTrans(Tween.TransitionType.Back);
 	}
 
 	public void SetDefeatScreen() {
