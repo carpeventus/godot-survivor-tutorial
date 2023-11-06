@@ -1,10 +1,16 @@
-[gd_scene load_steps=13 format=3 uid="uid://ik482kmrc674"]
+[gd_scene load_steps=19 format=3 uid="uid://ik482kmrc674"]
 
 [ext_resource type="Script" path="res://player/Player.cs" id="1_4ws04"]
 [ext_resource type="Texture2D" uid="uid://bsj716rw03ex7" path="res://sprites/Tiles/tile_0097.png" id="1_v4i0h"]
+[ext_resource type="PackedScene" uid="uid://uqsqpbivv1nj" path="res://component/random_audio_stream_player2d.tscn" id="2_abbxt"]
 [ext_resource type="PackedScene" uid="uid://8f364lj07xs0" path="res://component/health_component.tscn" id="2_che35"]
 [ext_resource type="PackedScene" uid="uid://bm3dxrj4rg7ax" path="res://component/velocity_component.tscn" id="2_mj5b1"]
 [ext_resource type="PackedScene" uid="uid://bqtonxc2xowav" path="res://ability_controller/sword_ability_controller.tscn" id="2_yco4e"]
+[ext_resource type="AudioStream" uid="uid://bpgg3saqlcr4n" path="res://sounds/impactMining_000.ogg" id="3_fvtsq"]
+[ext_resource type="AudioStream" uid="uid://clee8oba7047x" path="res://sounds/impactMining_001.ogg" id="4_bb8xi"]
+[ext_resource type="AudioStream" uid="uid://dlflae3427vg2" path="res://sounds/impactMining_002.ogg" id="5_v1wjy"]
+[ext_resource type="AudioStream" uid="uid://bkt2te8rrkdkt" path="res://sounds/impactMining_003.ogg" id="6_7nrlw"]
+[ext_resource type="AudioStream" uid="uid://c855yxwv5hpv6" path="res://sounds/impactMining_004.ogg" id="7_8uj13"]
 
 [sub_resource type="Animation" id="Animation_pk3ak"]
 length = 0.001
@@ -114,6 +120,9 @@ collision_layer = 2
 motion_mode = 1
 script = ExtResource("1_4ws04")
 
+[node name="RandomAudioStreamPlayer2D" parent="." instance=ExtResource("2_abbxt")]
+Sounds = Array[AudioStream]([ExtResource("3_fvtsq"), ExtResource("4_bb8xi"), ExtResource("5_v1wjy"), ExtResource("6_7nrlw"), ExtResource("7_8uj13")])
+
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
 "": SubResource("AnimationLibrary_wurfm")
@@ -157,7 +166,6 @@ position = Vector2(0, -5)
 shape = SubResource("CircleShape2D_yp0eo")
 
 [node name="PlayerHurtArea" type="Area2D" parent="."]
-visible = false
 collision_layer = 0
 collision_mask = 4
 

@@ -7,6 +7,11 @@ public partial class BasicEnemy : CharacterBody2D {
 	public override void _Ready() {
 		SpriteWrap = GetNode<Node2D>("SpriteWrap");
 		VelocityComponent = GetNode<VelocityComponent>("VelocityComponent");
+		GetNode<HurtBox>("HurtBox").Hurt += OnHurt;
+	}
+
+	private void OnHurt() {
+		GetNode<RandomAudioStreamPlayer2D>("HitRandomAudioStreamPlayer").PlayerRandom();
 	}
 
 	public override void _PhysicsProcess(double delta)

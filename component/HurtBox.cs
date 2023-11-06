@@ -4,6 +4,10 @@ public partial class HurtBox : Area2D {
 	[Export] public HealthComponent HealthComponent;
 
 	public PackedScene FloatingTextScene;
+
+	[Signal]
+	public delegate void HurtEventHandler();
+	
 	public override void _Ready()
 	{
 		FloatingTextScene = ResourceLoader.Load<PackedScene>("res://ui/floating_text.tscn");
@@ -15,6 +19,7 @@ public partial class HurtBox : Area2D {
 			return;
 		}
         HealthComponent?.TakeDamage(hitBox.Damage);
+        EmitSignal(SignalName.Hurt);
         var floatingText = FloatingTextScene.Instantiate<FloatingText>();
         GetTree().GetFirstNodeInGroup("EntitiesLayer").AddChild(floatingText);
         floatingText.GlobalPosition = hitBox.GlobalPosition + Vector2.Up * 8;

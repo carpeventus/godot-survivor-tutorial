@@ -36,6 +36,7 @@ public partial class DeathComponent : Node2D
 	}
 	private void Die()
 	{
+		GetNode<RandomAudioStreamPlayer2D>("HitRandomAudioStreamPlayer").PlayerRandom();
 		AnimationPlayer.Play("death");
 	}
 }

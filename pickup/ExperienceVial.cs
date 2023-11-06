@@ -23,6 +23,7 @@ public partial class ExperienceVial : Area2D
 			.SetTrans(Tween.TransitionType.Expo);
 		// 等前面的执行完了，执行Callback
 		tween.Chain().TweenCallback(Callable.From(Collected));
+		GetNode<RandomAudioStreamPlayer2D>("RandomAudioStreamPlayer2D").PlayerRandom();
 	}
 
 	private void Collected()

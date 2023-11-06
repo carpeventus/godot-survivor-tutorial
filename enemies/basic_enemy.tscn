@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://wx52d1nhvecm"]
+[gd_scene load_steps=22 format=3 uid="uid://wx52d1nhvecm"]
 
 [ext_resource type="Script" path="res://enemies/BasicEnemy.cs" id="1_bw4cv"]
 [ext_resource type="Texture2D" uid="uid://drqhs5fs13csm" path="res://sprites/Tiles/tile_0124.png" id="1_t7m5k"]
@@ -9,6 +9,12 @@
 [ext_resource type="PackedScene" uid="uid://bm3dxrj4rg7ax" path="res://component/velocity_component.tscn" id="5_4b61s"]
 [ext_resource type="PackedScene" uid="uid://coc5gv3cfsbyp" path="res://component/death_component.tscn" id="5_h2sx7"]
 [ext_resource type="PackedScene" uid="uid://dmjra5qi6grob" path="res://component/vial_drop_component.tscn" id="5_v23a3"]
+[ext_resource type="PackedScene" uid="uid://uqsqpbivv1nj" path="res://component/random_audio_stream_player2d.tscn" id="9_b66iv"]
+[ext_resource type="AudioStream" uid="uid://bgx07ci7lk2ug" path="res://sounds/footstep_carpet_000.ogg" id="10_t6f5t"]
+[ext_resource type="AudioStream" uid="uid://v8rjaweum8oj" path="res://sounds/footstep_carpet_001.ogg" id="11_pjoqf"]
+[ext_resource type="AudioStream" uid="uid://nh0iqxeh8sd0" path="res://sounds/footstep_carpet_002.ogg" id="12_n0hv6"]
+[ext_resource type="AudioStream" uid="uid://dxie7jqwnra2v" path="res://sounds/footstep_carpet_003.ogg" id="13_devch"]
+[ext_resource type="AudioStream" uid="uid://ckoacs8rnuifv" path="res://sounds/footstep_carpet_004.ogg" id="14_iyr5x"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_7rtjs"]
 radius = 9.0
@@ -114,6 +120,9 @@ HealthComponent = NodePath("../HealthComponent")
 [node name="DeathComponent" parent="." node_paths=PackedStringArray("HealthComponent", "Sprite") instance=ExtResource("5_h2sx7")]
 HealthComponent = NodePath("../HealthComponent")
 Sprite = NodePath("../SpriteWrap/Sprite2D")
+
+[node name="RandomAudioStreamPlayer2D" parent="." instance=ExtResource("9_b66iv")]
+Sounds = Array[AudioStream]([ExtResource("10_t6f5t"), ExtResource("11_pjoqf"), ExtResource("12_n0hv6"), ExtResource("13_devch"), ExtResource("14_iyr5x")])
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {

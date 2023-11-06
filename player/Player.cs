@@ -44,7 +44,6 @@ public partial class Player : CharacterBody2D
 		GetNode<GameEvents>("/root/GameEvents").AbilityUpgradeAdded += OnAbilityUpgradeAdded;
 		
 		BaseSpeed = VelocityComponent.MaxSpeed;
-
 		
 		UpdateHealthBarDisplay();
 	}
@@ -78,6 +77,7 @@ public partial class Player : CharacterBody2D
 		// TODO 这里血量变化不一定是受伤，还有可能捡到血瓶
 		GetNode<GameEvents>("/root/GameEvents").EmitPlayerHurt();
 		UpdateHealthBarDisplay();
+		GetNode<RandomAudioStreamPlayer2D>("RandomAudioStreamPlayer2D").PlayerRandom();
 	}
 
 	private void UpdateHealthBarDisplay()

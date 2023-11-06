@@ -10,7 +10,13 @@ public partial class WizardEnemy : CharacterBody2D
 	public override void _Ready() {
 		SpriteWrap = GetNode<Node2D>("SpriteWrap");
 		VelocityComponent = GetNode<VelocityComponent>("VelocityComponent");
+		GetNode<HurtBox>("HurtBox").Hurt += OnHurt;
 	}
+	
+	private void OnHurt() {
+		GetNode<RandomAudioStreamPlayer2D>("HitRandomAudioStreamPlayer2D").PlayerRandom();
+	}
+
 
 	public override void _PhysicsProcess(double delta)
 	{
