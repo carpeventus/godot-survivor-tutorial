@@ -14,7 +14,7 @@ public partial class WizardEnemy : CharacterBody2D
 	}
 	
 	private void OnHurt() {
-		GetNode<RandomAudioStreamPlayer2D>("HitRandomAudioStreamPlayer2D").PlayerRandom();
+		GetNode<RandomAudioStreamPlayer2D>("RandomAudioStreamPlayer2D").PlayerRandom();
 	}
 
 

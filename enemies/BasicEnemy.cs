@@ -11,7 +11,7 @@ public partial class BasicEnemy : CharacterBody2D {
 	}
 
 	private void OnHurt() {
-		GetNode<RandomAudioStreamPlayer2D>("HitRandomAudioStreamPlayer").PlayerRandom();
+		GetNode<RandomAudioStreamPlayer2D>("RandomAudioStreamPlayer2D").PlayerRandom();
 	}
 
 	public override void _PhysicsProcess(double delta)

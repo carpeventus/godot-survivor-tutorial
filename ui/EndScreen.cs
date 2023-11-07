@@ -3,6 +3,8 @@ using System;
 
 public partial class EndScreen : CanvasLayer {
 
+	[Export] private AudioStream VictorySound;
+	[Export] private AudioStream DefeatSound;
 	private Button _restartButton;
 	private Button _quitButton;
 	private Label _endText;
@@ -35,11 +37,22 @@ public partial class EndScreen : CanvasLayer {
 	public void SetDefeatScreen() {
 		_endText.Text = "Defeat";
 		_endDesc.Text = "You lose!";
+		PlayJingle();
 	}
 	
 	public void SetVictoryScreen() {
 		_endText.Text = "Victory";
 		_endDesc.Text = "You win!";
+		PlayJingle(true);
+	}
+
+	public void PlayJingle(bool victory = false) {
+		if (victory) {
+			GetNode<AudioStreamPlayer>("VictoryAudioStreamPlayer").Play();
+		}
+		else {
+			GetNode<AudioStreamPlayer>("DefeatAudioStreamPlayer2").Play();
+		}
 	}
 
 	private void OnRestartButtonPressed() {

@@ -1,7 +1,9 @@
-[gd_scene load_steps=7 format=3 uid="uid://dg6ckmuu7u4ck"]
+[gd_scene load_steps=9 format=3 uid="uid://dg6ckmuu7u4ck"]
 
 [ext_resource type="Script" path="res://ui/EndScreen.cs" id="1_ml14n"]
-[ext_resource type="Script" path="res://ui/SoundButton.cs" id="2_dnh61"]
+[ext_resource type="AudioStream" uid="uid://b0yr6gj4u3d0b" path="res://sounds/jingles_victory.ogg" id="2_fu8fb"]
+[ext_resource type="AudioStream" uid="uid://cno8mb5r5l5ee" path="res://sounds/jingles_defeat.ogg" id="3_0nnfl"]
+[ext_resource type="PackedScene" uid="uid://dp43w4yrpt4tx" path="res://ui/sound_button.tscn" id="4_vhp28"]
 
 [sub_resource type="Animation" id="Animation_mgaof"]
 length = 0.001
@@ -63,6 +65,14 @@ _data = {
 process_mode = 3
 script = ExtResource("1_ml14n")
 
+[node name="VictoryAudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("2_fu8fb")
+bus = &"sfx"
+
+[node name="DefeatAudioStreamPlayer2" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_0nnfl")
+bus = &"sfx"
+
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
 "": SubResource("AnimationLibrary_60cbo")
@@ -122,14 +132,12 @@ theme_override_constants/outline_size = 8
 text = "You Win!"
 vertical_alignment = 1
 
-[node name="RestartButton" type="Button" parent="MarginContainer/PanelContainer/MarginContainer/VBoxContainer"]
+[node name="RestartButton" parent="MarginContainer/PanelContainer/MarginContainer/VBoxContainer" instance=ExtResource("4_vhp28")]
 unique_name_in_owner = true
 layout_mode = 2
 text = "Restart"
-script = ExtResource("2_dnh61")
 
-[node name="QuitButton" type="Button" parent="MarginContainer/PanelContainer/MarginContainer/VBoxContainer"]
+[node name="QuitButton" parent="MarginContainer/PanelContainer/MarginContainer/VBoxContainer" instance=ExtResource("4_vhp28")]
 unique_name_in_owner = true
 layout_mode = 2
 text = "Quit"
-script = ExtResource("2_dnh61")
