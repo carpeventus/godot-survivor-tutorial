@@ -1,6 +1,7 @@
-[gd_scene load_steps=4 format=3 uid="uid://b351kg17lfusr"]
+[gd_scene load_steps=5 format=3 uid="uid://b351kg17lfusr"]
 
 [ext_resource type="Script" path="res://ui/OptionsMenu.cs" id="1_1tkit"]
+[ext_resource type="PackedScene" uid="uid://d2gbpljdmg088" path="res://ui/vignette.tscn" id="2_6mwje"]
 [ext_resource type="TileSet" uid="uid://n8a148baeint" path="res://resources/tileset.tres" id="2_73ehl"]
 [ext_resource type="PackedScene" uid="uid://dp43w4yrpt4tx" path="res://ui/sound_button.tscn" id="3_ntewi"]
 
@@ -39,6 +40,7 @@ theme_override_constants/separation = 8
 
 [node name="Label" type="Label" parent="MarginContainer/PanelContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
+theme_type_variation = &"BlueOutlineLabel"
 theme_override_font_sizes/font_size = 32
 text = "Options"
 horizontal_alignment = 1
@@ -53,6 +55,7 @@ layout_mode = 2
 
 [node name="SfxVolumeLabel" type="Label" parent="MarginContainer/PanelContainer/MarginContainer/VBoxContainer/VBoxContainer/SfxOptionContainer"]
 layout_mode = 2
+theme_type_variation = &"BlueOutlineLabel"
 text = "SFX Volume"
 
 [node name="SfxHSlider" type="HSlider" parent="MarginContainer/PanelContainer/MarginContainer/VBoxContainer/VBoxContainer/SfxOptionContainer"]
@@ -66,6 +69,7 @@ layout_mode = 2
 
 [node name="MusicVolumeLabel" type="Label" parent="MarginContainer/PanelContainer/MarginContainer/VBoxContainer/VBoxContainer/MusicOptionContainer"]
 layout_mode = 2
+theme_type_variation = &"BlueOutlineLabel"
 text = "Music Volume"
 
 [node name="MusicHSlider" type="HSlider" parent="MarginContainer/PanelContainer/MarginContainer/VBoxContainer/VBoxContainer/MusicOptionContainer"]
@@ -79,6 +83,7 @@ layout_mode = 2
 
 [node name="WindowModeLabel" type="Label" parent="MarginContainer/PanelContainer/MarginContainer/VBoxContainer/VBoxContainer/WindowModOptionContainer"]
 layout_mode = 2
+theme_type_variation = &"BlueOutlineLabel"
 text = "Window Mode"
 
 [node name="WindowModeButton" parent="MarginContainer/PanelContainer/MarginContainer/VBoxContainer/VBoxContainer/WindowModOptionContainer" instance=ExtResource("3_ntewi")]
@@ -95,3 +100,6 @@ layout_mode = 2
 size_flags_horizontal = 0
 text = "Back
 "
+
+[node name="Vignette" parent="." instance=ExtResource("2_6mwje")]
+layer = 2
