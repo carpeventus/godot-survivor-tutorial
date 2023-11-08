@@ -33,7 +33,6 @@ public partial class MainMenu : CanvasLayer
 	private async void OnPressedPlay()
 	{
 		var screenTransitionLayer = GetNode<ScreenTransitionLayer>("/root/ScreenTransitionLayer");
-		await ToSignal(screenTransitionLayer, ScreenTransitionLayer.SignalName.Transitioned);
-		GetTree().ChangeSceneToFile("res://scenes/main_scene.tscn");
+		screenTransitionLayer.Transition("res://scenes/main_scene.tscn");
 	}
 }

@@ -5,7 +5,7 @@ using Godot.Collections;
 public partial class GameEvents : Node {
 
     [Signal]
-    public delegate void ExperienceVialCollectedEventHandler(float exNum);
+    public delegate void ExperienceVialCollectedEventHandler(int exNum);
     
     [Signal]
     public delegate void AbilityUpgradeAddedEventHandler(AbilityUpgrade abilityUpgrade, Dictionary<string, UpgradeDictValue> currentUpgrades);
@@ -13,7 +13,7 @@ public partial class GameEvents : Node {
     [Signal]
     public delegate void PlayerTakeDamageEventHandler();
     
-    public void EmitExperienceVialCollected(float ex) {
+    public void EmitExperienceVialCollected(int ex) {
         EmitSignal(SignalName.ExperienceVialCollected, ex);
     }
     

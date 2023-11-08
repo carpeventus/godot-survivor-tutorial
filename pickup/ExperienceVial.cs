@@ -35,7 +35,7 @@ public partial class ExperienceVial : Area2D
 		_beCollected = true;
 		// GD 可以像静态方法一样调用 GameEvents.EmitExperienceVialCollected(1f);
 		// C# 只能👇这样...
-		GetNode<GameEvents>("/root/GameEvents").EmitExperienceVialCollected(1f);
+		GetNode<GameEvents>("/root/GameEvents").EmitExperienceVialCollected(1);
 		QueueFree();
 	}
 	

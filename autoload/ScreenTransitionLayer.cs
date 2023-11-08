@@ -3,35 +3,27 @@ using System;
 
 public partial class ScreenTransitionLayer : CanvasLayer
 {
-	[Signal]
-	public delegate void TransitionedEventHandler();
-
 	private AnimationPlayer _animationPlayer;
 
-	private bool _skipEmit;
 	public override void _Ready()
 	{
 		_animationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
 	}
 
-	public async void Transition()
+	public async void Transition(string sceneName)
 	{
 		_animationPlayer.Play("default");
-		await ToSignal(this, SignalName.Transitioned);
-		_skipEmit = true;
+		await ToSignal(_animationPlayer, AnimationMixer.SignalName.AnimationFinished);
+		GetTree().ChangeSceneToFile(sceneName);
 		_animationPlayer.PlayBackwards("default");
-
 	}
-
-	public  void EmitScreenTransitioned()
+	
+	public async void ReloadTransition()
 	{
-		if (_skipEmit)
-		{
-			_skipEmit = false;
-			return;
-		}
-
-		EmitSignal(SignalName.Transitioned);
+		_animationPlayer.Play("default");
+		await ToSignal(_animationPlayer, AnimationMixer.SignalName.AnimationFinished);
+		GetTree().ReloadCurrentScene();
+		_animationPlayer.PlayBackwards("default");
 	}
 	
 }

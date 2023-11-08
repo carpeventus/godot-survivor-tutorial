@@ -58,8 +58,7 @@ public partial class EndScreen : CanvasLayer {
 	private async void OnRestartButtonPressed() {
 		GetTree().Paused = false;
 		var screenTransitionLayer = GetNode<ScreenTransitionLayer>("/root/ScreenTransitionLayer");
-		await ToSignal(screenTransitionLayer, ScreenTransitionLayer.SignalName.Transitioned);
-		GetTree().CallDeferred(SceneTree.MethodName.ReloadCurrentScene);
+		screenTransitionLayer.ReloadTransition();
 	}
 	
 	private void OnQuitButtonPressed() {
