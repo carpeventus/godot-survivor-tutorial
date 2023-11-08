@@ -19,6 +19,7 @@ config/icon="res://icon.svg"
 
 GameEvents="*res://autoload/game_events.tscn"
 GlobalAudioStreamPlayer="*res://autoload/audio_stream_player.tscn"
+ScreenTransitionLayer="*res://autoload/screen_transition_layer.tscn"
 
 [display]
 
