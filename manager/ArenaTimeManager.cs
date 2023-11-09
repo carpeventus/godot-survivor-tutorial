@@ -30,6 +30,7 @@ public partial class ArenaTimeManager : Node {
 		EndScreen victory = EndScreenScene.Instantiate<EndScreen>();
 		Owner.AddChild(victory);
 		victory.SetVictoryScreen();
+		GetNode<MetaProgression>("/root/MetaProgression").SaveData();
 	}
 	
 	public double GetTimeElapse() {

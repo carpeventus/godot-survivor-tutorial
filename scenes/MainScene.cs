@@ -29,5 +29,6 @@ public partial class MainScene : Node2D {
 		EndScreen endScreen = EndScreenScene.Instantiate<EndScreen>();
 		AddChild(endScreen);
 		endScreen.SetDefeatScreen();
+		GetNode<MetaProgression>("/root/MetaProgression").SaveData();
 	}
 }

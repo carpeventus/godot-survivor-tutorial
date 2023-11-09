@@ -27,10 +27,12 @@ public partial class MainMenu : CanvasLayer
 	
 	private void OnPressedQuit()
 	{
+		GetNode<MetaProgression>("/root/MetaProgression").SaveData();
 		GetTree().Quit();
+
 	}
 
-	private async void OnPressedPlay()
+	private void OnPressedPlay()
 	{
 		var screenTransitionLayer = GetNode<ScreenTransitionLayer>("/root/ScreenTransitionLayer");
 		screenTransitionLayer.Transition("res://scenes/main_scene.tscn");

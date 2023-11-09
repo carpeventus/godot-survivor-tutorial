@@ -3,19 +3,37 @@ using Godot.Collections;
 
 public partial class MetaProgression : Node
 {
+
+    public readonly string UserDataFilePath = "res://game.tres";
     public SavedData SavedData { get; private set; } = new();
 
     public override void _Ready()
     {
         GetNode<GameEvents>("/root/GameEvents").ExperienceVialCollected += OnExperienceVialCollected;
-        MetaUpgrade metaUpgrade = ResourceLoader.Load<MetaUpgrade>("res://resources/meta_upgrade/experience_gain.tres");
-        AddMetaUpgrade(metaUpgrade);
-        GD.Print(SavedData.SavedDict["ExperienceGain"].Quantity);
+        LoadSavedData();
+    }
+    
+    private void LoadSavedData()
+    {
+        if (!ResourceLoader.Exists(UserDataFilePath))
+        {
+            return;
+        }
+
+        SavedData = ResourceLoader.Load<SavedData>(UserDataFilePath);
+        GD.Print(SavedData.MetaUpgradeCurrency);
     }
 
+    public void SaveData()
+    {
+         ResourceSaver.Save(SavedData, UserDataFilePath);
+    }
+    
     private void OnExperienceVialCollected(int exNum)
     {
+        
         SavedData.MetaUpgradeCurrency += exNum;
+        SaveData();
     }
 
     public void AddMetaUpgrade(MetaUpgrade metaUpgrade)
@@ -32,18 +50,3 @@ public partial class MetaProgression : Node
     }
 }
 
-public partial class SavedData : GodotObject
-{
-    public int MetaUpgradeCurrency { get;  set; }
-    public Dictionary<string, SavedDataDictValue> SavedDict { get; private set; } = new();
-}
-
-public partial class SavedDataDictValue : GodotObject
-{
-    public int Quantity { get; set; }
-
-    public SavedDataDictValue(int quantity)
-    {
-        Quantity = quantity;
-    }
-}

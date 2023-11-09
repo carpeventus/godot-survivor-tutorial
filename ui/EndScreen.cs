@@ -55,13 +55,14 @@ public partial class EndScreen : CanvasLayer {
 		}
 	}
 
-	private async void OnRestartButtonPressed() {
+	private void OnRestartButtonPressed() {
 		GetTree().Paused = false;
 		var screenTransitionLayer = GetNode<ScreenTransitionLayer>("/root/ScreenTransitionLayer");
 		screenTransitionLayer.ReloadTransition();
 	}
 	
 	private void OnQuitButtonPressed() {
+		GetNode<MetaProgression>("/root/MetaProgression").SaveData();
 		GetTree().Quit();
 	}
 
