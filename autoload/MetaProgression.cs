@@ -4,7 +4,7 @@ using Godot.Collections;
 public partial class MetaProgression : Node
 {
 
-    public readonly string UserDataFilePath = "res://game.tres";
+    public readonly string UserDataFilePath = "user://game.tres";
     public SavedData SavedData { get; private set; } = new();
 
     public override void _Ready()

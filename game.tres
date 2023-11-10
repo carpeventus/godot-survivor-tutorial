@@ -1,8 +1,0 @@
-[gd_resource type="Resource" load_steps=2 format=3]
-
-[ext_resource type="Script" path="res://resources/SavedData.cs" id="1_a56y0"]
-
-[resource]
-script = ExtResource("1_a56y0")
-MetaUpgradeCurrency = 127
-SavedDict = {}
