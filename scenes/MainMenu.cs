@@ -9,8 +9,14 @@ public partial class MainMenu : CanvasLayer
 	{
 		GetNode<Button>("%PlayButton").Pressed += OnPressedPlay;
 		GetNode<Button>("%QuitButton").Pressed += OnPressedQuit;
+		GetNode<Button>("%UpgradesButton").Pressed += OnUpgradesPressed;
 		GetNode<Button>("%OptionsButton").Pressed += OnPressedOptions;
 		_optionMenuScene = ResourceLoader.Load<PackedScene>("res://ui/options_menu.tscn");
+	}
+
+	private void OnUpgradesPressed() {
+		var screenTransitionLayer = GetNode<ScreenTransitionLayer>("/root/ScreenTransitionLayer");
+		screenTransitionLayer.Transition("res://ui/meta_menu.tscn");
 	}
 
 	private void OnPressedOptions()

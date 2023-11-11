@@ -1,5 +1,4 @@
 using Godot;
-using System;
 
 public partial class VialDropComponent : Node
 {
@@ -13,9 +12,12 @@ public partial class VialDropComponent : Node
 		HealthComponent.Died += OnDied;
 	}
 
-	private void OnDied()
-	{
-		if (GD.Randf() < DropPercent)
+	private void OnDied() {
+		var adjustedDropPercent = DropPercent;
+		var extraDropPercent = GetNode<MetaProgression>("/root/MetaProgression").GetMetaUpgradeQuantity("ExperienceGain");
+		adjustedDropPercent += extraDropPercent * 0.1f;
+		var threshold = GD.Randf();
+		if (adjustedDropPercent < threshold)
 		{
 			return;
 		}

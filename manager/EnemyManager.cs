@@ -65,8 +65,11 @@ public partial class EnemyManager : Node {
 		for (int i = 0; i < 4; i++)
 		{
 			spawnPosition = player.GlobalPosition + (2f / 3f) * viewportSize * randomDirection;
+			// 防止敌人卡在墙里，如果末端刚好在墙边缘，就会认为没有障碍，但是碰撞体有一定半径，会出现刚产生就卡墙
+			// 增长射线，如果射线末端刚好在墙边缘，也能保证是在墙里生存的（返回的还是spawnPosition，未增加32p像素）
+			var additionalOffset = randomDirection * 32f;
 			// player 到生成的地方是否有碰撞
-			PhysicsRayQueryParameters2D rayQueryParameters = PhysicsRayQueryParameters2D.Create(player.GlobalPosition, spawnPosition, 1<<0);
+			PhysicsRayQueryParameters2D rayQueryParameters = PhysicsRayQueryParameters2D.Create(player.GlobalPosition, spawnPosition + additionalOffset, 1<<0);
 			Dictionary dictionary = GetTree().Root.World2D.DirectSpaceState.IntersectRay(rayQueryParameters);
 			if (dictionary.Count == 0)
 			{

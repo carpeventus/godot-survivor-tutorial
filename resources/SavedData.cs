@@ -9,12 +9,3 @@ public partial class SavedData : Resource
 }
 
 
-public partial class SavedDataDictValue : Resource
-{
-    public int Quantity { get; set; }
-
-    public SavedDataDictValue(int quantity)
-    {
-        Quantity = quantity;
-    }
-}

@@ -23,8 +23,7 @@ public partial class OptionsMenu : CanvasLayer
 		UpdateDisplay();
 	}
 
-	private void OnBackButtonPressed()
-	{
+	private void OnBackButtonPressed() {
 		EmitSignal(SignalName.BackButtonPressed);
 	}
 

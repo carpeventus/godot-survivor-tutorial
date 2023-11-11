@@ -21,7 +21,6 @@ public partial class MetaProgression : Node
         }
 
         SavedData = ResourceLoader.Load<SavedData>(UserDataFilePath);
-        GD.Print(SavedData.MetaUpgradeCurrency);
     }
 
     public void SaveData()
@@ -36,6 +35,14 @@ public partial class MetaProgression : Node
         SaveData();
     }
 
+    public int GetMetaUpgradeQuantity(string upgradeId) {
+        if (SavedData.SavedDict.TryGetValue(upgradeId, out var dictValue)) {
+            return dictValue.Quantity;
+        }
+
+        return 0;
+    }
+
     public void AddMetaUpgrade(MetaUpgrade metaUpgrade)
     {
         var upgradeId = metaUpgrade.Id;
@@ -47,6 +54,7 @@ public partial class MetaProgression : Node
         {
             SavedData.SavedDict.Add(upgradeId, new SavedDataDictValue(1));
         }
+        SaveData();
     }
 }
 

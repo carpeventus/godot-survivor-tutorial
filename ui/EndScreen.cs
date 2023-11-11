@@ -5,21 +5,21 @@ public partial class EndScreen : CanvasLayer {
 
 	[Export] private AudioStream VictorySound;
 	[Export] private AudioStream DefeatSound;
-	private Button _restartButton;
-	private Button _quitButton;
+	private Button _continueButton;
+	private Button _quitToMenuButton;
 	private Label _endText;
 	private Label _endDesc;
 
 	private PanelContainer _panelContainer;
 	public override void _Ready() {
 		_panelContainer = GetNode<PanelContainer>("MarginContainer/PanelContainer");
-		_restartButton = GetNode<Button>("%RestartButton");
-		_quitButton = GetNode<Button>("%QuitButton");
+		_continueButton = GetNode<Button>("%ContinueButton");
+		_quitToMenuButton = GetNode<Button>("%QuitToMenuButton");
 		_endText = GetNode<Label>("%EndText");
 		_endDesc = GetNode<Label>("%EndDesc");
 		
-		_restartButton.Pressed += OnRestartButtonPressed;
-		_quitButton.Pressed += OnQuitButtonPressed;
+		_continueButton.Pressed += OnContinueButtonPressed;
+		_quitToMenuButton.Pressed += OnQuitToMenuButtonPressed;
 		_panelContainer.PivotOffset = _panelContainer.Size / 2;
 		TweenAnimation();
 		GetTree().Paused = true;
@@ -55,15 +55,17 @@ public partial class EndScreen : CanvasLayer {
 		}
 	}
 
-	private void OnRestartButtonPressed() {
+	private void OnContinueButtonPressed() {
 		GetTree().Paused = false;
 		var screenTransitionLayer = GetNode<ScreenTransitionLayer>("/root/ScreenTransitionLayer");
-		screenTransitionLayer.ReloadTransition();
+		screenTransitionLayer.Transition("res://ui/meta_menu.tscn");
 	}
 	
-	private void OnQuitButtonPressed() {
-		GetNode<MetaProgression>("/root/MetaProgression").SaveData();
-		GetTree().Quit();
+	private void OnQuitToMenuButtonPressed() {
+		var screenTransitionLayer = GetNode<ScreenTransitionLayer>("/root/ScreenTransitionLayer");
+		screenTransitionLayer.Transition("res://scenes/main_menu.tscn");
+		GetTree().Paused = false;
+
 	}
 
 }
