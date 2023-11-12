@@ -7,11 +7,11 @@ public partial class HitFlashComponent : Node {
 	[Export] public ShaderMaterial HitFlashShader;
 	public Tween RunningTween { get; private set; }
 	public override void _Ready() {
-		Health.HealthChange += OnHealthChanged;
+		Health.HealthDecreased += OnHealthDecreased;
 		Sprite.Material = HitFlashShader;
 	}
 
-	private void OnHealthChanged() {
+	private void OnHealthDecreased() {
 		if (RunningTween is not null && RunningTween.IsValid()) {
 			RunningTween.Kill();
 		}

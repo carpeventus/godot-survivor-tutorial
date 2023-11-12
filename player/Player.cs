@@ -1,8 +1,8 @@
 using Godot;
 using Godot.Collections;
 
-public partial class Player : CharacterBody2D
-{
+public partial class Player : CharacterBody2D {
+	[Export] public ArenaTimeManager ArenaTimeManager;
 	public Vector2 InputMovement { get; private set; }
 	public Vector2 Direction { get; private set; }
 
@@ -17,8 +17,7 @@ public partial class Player : CharacterBody2D
 	public AnimationPlayer AnimationPlayer { get; private set; }
 	public Node2D SpriteWrap { get; private set; }
 	public VelocityComponent VelocityComponent { get; private set; }
-
-	public float BaseSpeed = 0f;
+	public float BaseSpeed { get; private set; }
 
 	#region MyRegion
 
@@ -40,12 +39,28 @@ public partial class Player : CharacterBody2D
 		PlayerHurtArea.BodyEntered += OnEnemyBodyEntered;
 		PlayerHurtArea.BodyExited += OnEnemyBodyExited;
 		DamageIntervalTimer.Timeout += OnDamageIntervalTimerTimeout;
+		Health.HealthDecreased += OnHealthDecreased;
 		Health.HealthChange += OnHealthChanged;
 		GetNode<GameEvents>("/root/GameEvents").AbilityUpgradeAdded += OnAbilityUpgradeAdded;
+		ArenaTimeManager.ArenaDifficultyUp += OnDifficultyUp;
 		
 		BaseSpeed = VelocityComponent.MaxSpeed;
 		
 		UpdateHealthBarDisplay();
+	}
+
+	private void OnDifficultyUp(int difficulty) {
+		// 5、10、15、20等级会恢复hp，即每25s恢复1点
+		var shouldHeal = difficulty % 5 == 0;
+		if (!shouldHeal) {
+			return;
+		}
+		var savedData = GetNode<MetaProgression>("/root/MetaProgression").SavedData;
+		if (savedData.SavedDict.TryGetValue("HealthRegeneration", out var dictValue)) {
+			if (dictValue.Quantity > 0) {
+				Health.Heal(dictValue.Quantity);
+			}
+		}
 	}
 
 	public override void _ExitTree()
@@ -72,12 +87,16 @@ public partial class Player : CharacterBody2D
 		
 	}
 	
-	private void OnHealthChanged()
+	private void OnHealthDecreased()
 	{
-		// TODO 这里血量变化不一定是受伤，还有可能捡到血瓶
 		GetNode<GameEvents>("/root/GameEvents").EmitPlayerHurt();
-		UpdateHealthBarDisplay();
 		GetNode<RandomAudioStreamPlayer2D>("RandomAudioStreamPlayer2D").PlayerRandom();
+	}
+	
+	
+
+	private void OnHealthChanged() {
+		UpdateHealthBarDisplay();
 	}
 
 	private void UpdateHealthBarDisplay()

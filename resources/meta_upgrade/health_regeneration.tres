@@ -1,0 +1,11 @@
+[gd_resource type="Resource" load_steps=2 format=3 uid="uid://ua7abp2t8hao"]
+
+[ext_resource type="Script" path="res://resources/meta_upgrade/MetaUpgrade.cs" id="1_5jiwv"]
+
+[resource]
+script = ExtResource("1_5jiwv")
+Id = "HealthRegeneration"
+Name = "Health Regen"
+MaxQuantity = 3
+ExperienceCost = 50
+Description = "Regenerate 1 health every 10 seconds."

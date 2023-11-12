@@ -5,6 +5,7 @@ public partial class EnemyManager : Node {
 	#region EnemyScene
 	[Export] public PackedScene BasicEnemyScene;
 	[Export] public PackedScene WizardEnemyScene;
+	[Export] public PackedScene BatEnemyScene;
 
 	#endregion
 
@@ -21,7 +22,7 @@ public partial class EnemyManager : Node {
 		_timer.Timeout += OnTimeout;
 		ArenaTimeManager.ArenaDifficultyUp += OnArenaDifficultyUp;
 		_baseSpawnTime = _timer.WaitTime;
-		// Add Enemy
+		// Add First Enemy
 		WeightTable.AddItem(new ItemWeight<PackedScene>("BasicEnemyScene", BasicEnemyScene, 10));
 	}
 
@@ -33,6 +34,8 @@ public partial class EnemyManager : Node {
 		if (difficulty == 6)
 		{
 			WeightTable.AddItem(new ItemWeight<PackedScene>("WizardEnemyScene", WizardEnemyScene, 20));
+		} else if (difficulty == 12) {
+			WeightTable.AddItem(new ItemWeight<PackedScene>("BatEnemyScene", BatEnemyScene, 10));
 		}
 		
 	}

@@ -103,7 +103,7 @@ collision_layer = 4
 collision_mask = 5
 script = ExtResource("1_2rgll")
 
-[node name="RandomAudioStreamPlayer" parent="." instance=ExtResource("2_4k421")]
+[node name="RandomAudioStreamPlayer2D" parent="." instance=ExtResource("2_4k421")]
 Sounds = Array[AudioStream]([ExtResource("3_pv6k0"), ExtResource("4_85j03"), ExtResource("5_ve563"), ExtResource("6_u7t7h"), ExtResource("7_fjaim")])
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]

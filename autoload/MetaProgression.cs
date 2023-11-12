@@ -11,6 +11,8 @@ public partial class MetaProgression : Node
     {
         GetNode<GameEvents>("/root/GameEvents").ExperienceVialCollected += OnExperienceVialCollected;
         LoadSavedData();
+        
+        OnExperienceVialCollected(1000);
     }
     
     private void LoadSavedData()
