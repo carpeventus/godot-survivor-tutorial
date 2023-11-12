@@ -14,6 +14,8 @@ public partial class EnemyManager : Node {
 	private Timer _timer;
 
 	private double _baseSpawnTime;
+	private int _numberToSpawn = 1;
+	private int _maxNumberToSpawn = 3;
 
 	public WeightTable<PackedScene> WeightTable { get; private set; } = new ();
 	public override void _Ready()
@@ -37,7 +39,12 @@ public partial class EnemyManager : Node {
 		} else if (difficulty == 12) {
 			WeightTable.AddItem(new ItemWeight<PackedScene>("BatEnemyScene", BatEnemyScene, 10));
 		}
-		
+
+		// 每30s增多敌人
+		if (difficulty % 6 == 0) {
+			_numberToSpawn += 1;
+			_numberToSpawn = Mathf.Min(_numberToSpawn, _maxNumberToSpawn);
+		}
 	}
 
 	private void OnTimeout() {
@@ -45,12 +52,14 @@ public partial class EnemyManager : Node {
 		
 		var entities = GetTree().GetFirstNodeInGroup("EntitiesLayer");
 		// 视口尺寸的3/2 * 随机方向 + 玩家位置 
-		PackedScene enemyScene = WeightTable.PickItem();
-		Node2D enemy = enemyScene?.Instantiate<Node2D>();
-		if (enemy is not null)
-		{
-			entities.AddChild(enemy);
-			enemy.Position = GetSpawnPosition();
+		for (int i = 0; i < _numberToSpawn; i++) {
+			PackedScene enemyScene = WeightTable.PickItem();
+			Node2D enemy = enemyScene?.Instantiate<Node2D>();
+			if (enemy is not null)
+			{
+				entities.AddChild(enemy);
+				enemy.Position = GetSpawnPosition();
+			}
 		}
 	}
 

@@ -1,4 +1,4 @@
-[gd_resource type="Resource" load_steps=3 format=3 uid="uid://jec3ncxj07bt"]
+[gd_resource type="Resource" script_class="AbilityResource" load_steps=3 format=3 uid="uid://jec3ncxj07bt"]
 
 [ext_resource type="PackedScene" uid="uid://b7rax4ib53ebm" path="res://ability_controller/axe_ability_controller.tscn" id="1_kx7jh"]
 [ext_resource type="Script" path="res://resources/upgrade/AbilityResource.cs" id="2_g0jmv"]

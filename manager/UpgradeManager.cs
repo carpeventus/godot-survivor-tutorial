@@ -16,7 +16,8 @@ public partial class UpgradeManager : Node {
     public AbilityUpgrade SwordRateUpgrade { get; private set; } 
     public AbilityUpgrade SwordDamageUpgrade { get; private set; } 
     public AbilityUpgrade AxeDamageUpgrade { get; private set; } 
-    public AbilityUpgrade AnvilUpgrade { get; private set; } 
+    public AbilityUpgrade AnvilAbility{ get; private set; } 
+    public AbilityUpgrade AnvilCountUpgrade { get; private set; } 
     public AbilityUpgrade PlayerSpeedUpgrade { get; private set; } 
 
     #endregion
@@ -31,13 +32,14 @@ public partial class UpgradeManager : Node {
         SwordDamageUpgrade = ResourceLoader.Load<AbilityUpgrade>("res://resources/upgrade/sword_damage.tres");
         AxeDamageUpgrade = ResourceLoader.Load<AbilityUpgrade>("res://resources/upgrade/axe_damage.tres");
         PlayerSpeedUpgrade = ResourceLoader.Load<AbilityUpgrade>("res://resources/upgrade/player_speed.tres");
-        AnvilUpgrade = ResourceLoader.Load<AbilityUpgrade>("res://resources/upgrade/anvil.tres");
+        AnvilAbility = ResourceLoader.Load<AbilityUpgrade>("res://resources/upgrade/anvil.tres");
+        AnvilCountUpgrade = ResourceLoader.Load<AbilityUpgrade>("res://resources/upgrade/anvil_count.tres");
         
         AbilityUpgradePool.AddItem(new ItemWeight<AbilityUpgrade>(AxeAbilityUpgrade.Id, AxeAbilityUpgrade, 10));
         AbilityUpgradePool.AddItem(new ItemWeight<AbilityUpgrade>(SwordRateUpgrade.Id, SwordRateUpgrade, 10));
         AbilityUpgradePool.AddItem(new ItemWeight<AbilityUpgrade>(SwordDamageUpgrade.Id, SwordDamageUpgrade, 10));
         AbilityUpgradePool.AddItem(new ItemWeight<AbilityUpgrade>(PlayerSpeedUpgrade.Id, PlayerSpeedUpgrade, 5));
-        AbilityUpgradePool.AddItem(new ItemWeight<AbilityUpgrade>(AnvilUpgrade.Id, AnvilUpgrade, 5));
+        AbilityUpgradePool.AddItem(new ItemWeight<AbilityUpgrade>(AnvilAbility.Id, AnvilAbility, 50));
         
         ExperienceManager.LevelUp += OnLevelUp;
     }
@@ -101,6 +103,9 @@ public partial class UpgradeManager : Node {
         if (chosen.Id.Equals(AxeAbilityUpgrade.Id))
         {
             AbilityUpgradePool.AddItem(new ItemWeight<AbilityUpgrade>(AxeDamageUpgrade.Id, AxeDamageUpgrade, 10));
+        }
+        else if (chosen.Id.Equals(AnvilAbility.Id)){
+            AbilityUpgradePool.AddItem(new ItemWeight<AbilityUpgrade>(AnvilCountUpgrade.Id, AnvilCountUpgrade, 1000));
         }
     }
 }

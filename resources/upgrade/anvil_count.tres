@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="AbilityUpgrade" load_steps=2 format=3 uid="uid://c1qg1efy3xm0u"]
+
+[ext_resource type="Script" path="res://resources/upgrade/AbilityUpgrade.cs" id="1_mhtkg"]
+
+[resource]
+script = ExtResource("1_mhtkg")
+Id = "AnvilCount"
+Name = "Anvil Count"
+Description = "Add 1 addtional anval."
+MaxQuantity = 2
